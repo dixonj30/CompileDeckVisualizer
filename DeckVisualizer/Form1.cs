@@ -14,6 +14,11 @@ namespace DeckVisualizer
         private const int windowHeight = 955;
         private const int deckPickerWindowWidth = 800;
         private const int deckPickerWindowHeight = 550;
+        private FlowLayoutPanel[] p1Rows = new FlowLayoutPanel[3];
+        private FlowLayoutPanel[] p2Rows = new FlowLayoutPanel[3];
+        private FlowLayoutPanel controlPanel;
+        private Button p1Deck1Menu, p1Deck2Menu, p1Deck3Menu;
+        private Button p2Deck1Menu, p2Deck2Menu, p2Deck3Menu;
 
         public Form1()
         {
@@ -92,9 +97,6 @@ namespace DeckVisualizer
             }
         }
 
-        private FlowLayoutPanel[] p1Rows = new FlowLayoutPanel[3];
-        private FlowLayoutPanel[] p2Rows = new FlowLayoutPanel[3];
-
         private void SetupGameTab()
         {
             TableLayoutPanel mainLayout = new TableLayoutPanel
@@ -109,7 +111,7 @@ namespace DeckVisualizer
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 220));
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 760));
 
-            FlowLayoutPanel controlPanel = new FlowLayoutPanel
+            controlPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
@@ -121,7 +123,7 @@ namespace DeckVisualizer
                 WrapContents = false
             };
 
-            Label lblP1Title = new Label { Text = "Player 1 Decks:", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 120, 0, 8), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
+            Label lblP1Title = new Label { Text = "", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 120, 0, 8), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
             controlPanel.Controls.Add(lblP1Title);
 
             Button btnP1D1 = new Button { Text = "Select P1 Deck 1...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
@@ -136,12 +138,12 @@ namespace DeckVisualizer
             controlPanel.Controls.Add(btnP1D2);
             controlPanel.Controls.Add(btnP1D3);
 
-            Button btnOpenEditor = new Button { Text = "Open Deck Editor", Width = 150, Height = 35, BackColor = Color.FromArgb(50, 65, 80), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 140, 0, 0), Anchor = AnchorStyles.None };
+            Button btnOpenEditor = new Button { Text = "Open Deck Editor", Width = 150, Height = 35, BackColor = Color.FromArgb(50, 65, 80), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 175, 0, 140), Anchor = AnchorStyles.None };
             btnOpenEditor.FlatAppearance.BorderSize = 0;
             btnOpenEditor.Click += (s, e) => { using (EditorWindow popup = new EditorWindow(RefreshAllMenus)) { popup.ShowDialog(this); } };
             controlPanel.Controls.Add(btnOpenEditor);
 
-            Label lblP2Title = new Label { Text = "Player 2 Decks:", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 160, 0, 0), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
+            Label lblP2Title = new Label { Text = "", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 0, 0, 0), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
             controlPanel.Controls.Add(lblP2Title);
 
             Button btnP2D1 = new Button { Text = "Select P2 Deck 1...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
@@ -175,15 +177,38 @@ namespace DeckVisualizer
                 }
             }
 
-            Panel horizontalDivider = new Panel
+            TableLayoutPanel horizontalDivider = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                BackColor = Color.FromArgb(50, 50, 55), 
-                Margin = new Padding(0),                
-                Padding = new Padding(0)
+                BackColor = Color.FromArgb(50, 50, 55),
+                Margin = new Padding(0),
+                Padding = new Padding(0),
+                ColumnCount = 1,
+                RowCount = 1
             };
-            boardLayout.Controls.Add(horizontalDivider, 0, 3);
 
+            horizontalDivider.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+            horizontalDivider.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+
+            Button btnResetBoard = new Button
+            {
+                Text = "RESET",
+                Width = 60,
+                Height = 16,
+                BackColor = Color.FromArgb(110, 45, 45),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 4f, FontStyle.Bold),
+                Anchor = AnchorStyles.None
+            };
+            btnResetBoard.FlatAppearance.BorderSize = 0;
+            btnResetBoard.Click += MasterResetButton_Click;
+            btnResetBoard.Location = new Point(
+                (760 - btnResetBoard.Width) / 2,
+                (20 - btnResetBoard.Height) / 2
+            );
+            horizontalDivider.Controls.Add(btnResetBoard);
+            boardLayout.Controls.Add(horizontalDivider, 0, 3);
 
             for (int i = 0; i < 3; i++)
             {
@@ -325,6 +350,56 @@ namespace DeckVisualizer
                 pic.CurrentOverlay = cycleList[currentIndex];
 
                 pic.Invalidate();
+            }
+        }
+
+        private void MasterResetButton_Click(object sender, EventArgs e)
+        {
+            // 1. Fully reset all Player 1 rows data
+            for (int r = 0; r < 3; r++)
+            {
+                foreach (Control c in p1Rows[r].Controls)
+                {
+                    if (c is CardPictureBox pic)
+                    {
+                        pic.Image = null; // Clear image file reference completely
+                        pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0]; // Reset overlay to Off state
+                        pic.CardLabel = $"P1 Row {r + 1}\nSlot {p1Rows[r].Controls.IndexOf(pic) + 1}"; // Restore basic template text
+                        pic.Invalidate(); // Refresh graphic canvas painter routines
+                    }
+                }
+            }
+
+            // 2. Fully reset all Player 2 rows data
+            for (int r = 0; r < 3; r++)
+            {
+                foreach (Control c in p2Rows[r].Controls)
+                {
+                    if (c is CardPictureBox pic)
+                    {
+                        pic.Image = null; // Clear image file reference completely
+                        pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0]; // Reset overlay to Off state
+                        pic.CardLabel = $"P2 Row {r + 1}\nSlot {p2Rows[r].Controls.IndexOf(pic) + 1}"; // Restore basic template text
+                        pic.Invalidate(); // Refresh graphic canvas painter routines
+                    }
+                }
+            }
+
+            foreach (Control ctrl in controlPanel.Controls)
+            {
+                if (ctrl is Button btn && btn.Text != "Open Deck Editor")
+                {
+                    // Revert visual highlights back to neutral dark styles
+                    btn.BackColor = Color.FromArgb(50, 50, 55);
+
+                    // Simple pattern match check routine to restore specific text strings
+                    if (btn == p1Deck1Menu) btn.Text = "Select P1 Deck 1...";
+                    else if (btn == p1Deck2Menu) btn.Text = "Select P1 Deck 2...";
+                    else if (btn == p1Deck3Menu) btn.Text = "Select P1 Deck 3...";
+                    else if (btn == p2Deck1Menu) btn.Text = "Select P2 Deck 1...";
+                    else if (btn == p2Deck2Menu) btn.Text = "Select P2 Deck 2...";
+                    else if (btn == p2Deck3Menu) btn.Text = "Select P2 Deck 3...";
+                }
             }
         }
 
