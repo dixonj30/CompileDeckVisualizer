@@ -689,8 +689,8 @@ namespace DeckVisualizer
                 {
                     Panel deckTile = new Panel
                     {
-                        Width = 170,
-                        Height = 70,
+                        Width = deckPickerWindowWidth / 5,
+                        Height = deckPickerWindowHeight / 8,
                         Margin = new Padding(3),
                         BackColor = Color.Transparent,
                         Cursor = Cursors.Hand
@@ -699,7 +699,7 @@ namespace DeckVisualizer
                     PictureBox imgCover = new PictureBox
                     {
                         Location = new Point(-10, 0),
-                        Size = new Size(170, 70),
+                        Size = new Size(deckPickerWindowWidth / 5, deckPickerWindowHeight / 8),
                         SizeMode = PictureBoxSizeMode.Normal,
                         BackColor = Color.Transparent
                     };
