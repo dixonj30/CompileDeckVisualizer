@@ -16,9 +16,41 @@ namespace DeckVisualizer
         private const int deckPickerWindowHeight = 550;
         private FlowLayoutPanel[] p1Rows = new FlowLayoutPanel[3];
         private FlowLayoutPanel[] p2Rows = new FlowLayoutPanel[3];
-        private FlowLayoutPanel controlPanel;
         private Button p1Deck1Menu, p1Deck2Menu, p1Deck3Menu;
         private Button p2Deck1Menu, p2Deck2Menu, p2Deck3Menu;
+
+        private static readonly Color DefaultButtonColor = Color.FromArgb(45, 110, 75);
+        private static readonly Color ActiveButtonColor = Color.FromArgb(40, 75, 95);
+        private static readonly string[] ButtonDefaultLabels = new string[]
+        {
+            "Select P1\nDeck 1", "Select P1\nDeck 2", "Select P1\nDeck 3",
+            "Select P2\nDeck 1", "Select P2\nDeck 2", "Select P2\nDeck 3"
+        };
+
+        private static readonly Color AppMainBackgroundColor = Color.FromArgb(35, 35, 40);
+        private static readonly Color DefaultCardBackgroundColor = Color.DimGray;
+        private static readonly string CardEmptyPlaceholderText = "Empty";
+        private static readonly string CardMissingPlaceholderText = "Missing";
+
+        private static readonly string AppTitleHeader = "Compile Deck Tracker";
+        private static readonly string DeckPickerWindowTitle = "Select Card Deck Layout Profile";
+        private static readonly string ResetButtonLabel = "RESET";
+        private static readonly string EditorButtonLabel = "EDITOR";
+
+        private static readonly string StorageEmptyMessage = "No custom decks found! Open the Deck Editor to build your first card deck profile.";
+        private static readonly string StorageEmptyTitle = "Empty Storage";
+        private static readonly string SaveSuccessTitle = "Success";
+        private static readonly string EditorEmptyWarning = "Please type in a Deck Name first.";
+        private static readonly string EditorEmptyTitle = "Error";
+        private static readonly string EditorEmptySlot = "Empty Slot...";
+        private static readonly string EditorBatchSelectButton = "⚡ Batch Select 6 Images At Once";
+        private static readonly string BatchLimitNotice = "You selected more than 6 images. Only the first 6 will be used.";
+        private static readonly string BatchLimitTitle = "Notice";
+        
+
+        public static readonly string DecksDatabaseFileName = "decks.json";
+        public static readonly string ResourcesFolderName = "resources";
+        public static readonly string ImageFileFilters = "Image Files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
 
         public Form1()
         {
@@ -39,7 +71,7 @@ namespace DeckVisualizer
 
             Label lblTitle = new Label
             {
-                Text = "Compile Deck Tracker",
+                Text = AppTitleHeader,
                 ForeColor = Color.White,
                 Font = new Font("Arial", 9, FontStyle.Bold),
                 Location = new Point(windowWidth / 2, 5),
@@ -79,7 +111,7 @@ namespace DeckVisualizer
 
         private void LoadDecksFromDisk()
         {
-            string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "decks.json");
+            string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DecksDatabaseFileName);
             loadedDecks = new List<DeckConfig>();
 
             if (File.Exists(jsonPath))
@@ -106,13 +138,13 @@ namespace DeckVisualizer
                 Margin = new Padding(0),
                 Padding = new Padding(0),
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.None,
-                BackColor = Color.FromArgb(35, 35, 40)
+                BackColor = AppMainBackgroundColor
             };
             mainLayout.ColumnStyles.Clear();
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 148));
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 832));
 
-            TableLayoutPanel boardLayout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 7, Margin = new Padding(0), Padding = new Padding(0), AutoScroll = true, BackColor = Color.FromArgb(35, 35, 40) };
+            TableLayoutPanel boardLayout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 7, Margin = new Padding(0), Padding = new Padding(0), AutoScroll = true, BackColor = AppMainBackgroundColor };
             boardLayout.RowStyles.Clear();
             for (int r = 0; r < 7; r++)
             {
@@ -136,7 +168,7 @@ namespace DeckVisualizer
 
             Button btnOpenEditorRow = new Button
             {
-                Text = "EDITOR",
+                Text = EditorButtonLabel,
                 Width = 60,
                 Height = 16,
                 BackColor = Color.FromArgb(50, 65, 80),
@@ -159,7 +191,7 @@ namespace DeckVisualizer
 
             Button btnResetBoard = new Button
             {
-                Text = "RESET",
+                Text = ResetButtonLabel,
                 Width = 60,
                 Height = 16,
                 BackColor = Color.FromArgb(110, 45, 45),
@@ -176,13 +208,13 @@ namespace DeckVisualizer
             boardLayout.Controls.Add(horizontalDivider, 0, 3);
             boardLayout.SetColumnSpan(horizontalDivider, 2);
 
-            p1Deck1Menu = new Button { Text = "Select P1\nDeck 1...", Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 2, 4, 2) };
-            p1Deck2Menu = new Button { Text = "Select P1\nDeck 2...", Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
-            p1Deck3Menu = new Button { Text = "Select P1\nDeck 3...", Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
+            p1Deck1Menu = new Button { Text = ButtonDefaultLabels[0], Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 2, 4, 2) };
+            p1Deck2Menu = new Button { Text = ButtonDefaultLabels[1], Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
+            p1Deck3Menu = new Button { Text = ButtonDefaultLabels[2], Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
 
-            p2Deck1Menu = new Button { Text = "Select P2\nDeck 1...", Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
-            p2Deck2Menu = new Button { Text = "Select P2\nDeck 2...", Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
-            p2Deck3Menu = new Button { Text = "Select P2\nDeck 3...", Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
+            p2Deck1Menu = new Button { Text = ButtonDefaultLabels[3], Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
+            p2Deck2Menu = new Button { Text = ButtonDefaultLabels[4], Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
+            p2Deck3Menu = new Button { Text = ButtonDefaultLabels[5], Width = 128, Height = 146, BackColor = Color.FromArgb(45, 110, 75), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None, Margin = new Padding(4, 3, 4, 3) };
 
             p1Deck1Menu.Click += (s, e) => OpenVisualDeckPicker(p1Rows[0], "P1 Deck 1", p1Deck1Menu);
             p1Deck2Menu.Click += (s, e) => OpenVisualDeckPicker(p1Rows[1], "P1 Deck 2", p1Deck2Menu);
@@ -227,7 +259,7 @@ namespace DeckVisualizer
 
             if (loadedDecks.Count == 0)
             {
-                MessageBox.Show("No custom decks found! Open the Deck Editor to build your first card deck profile.", "Empty Storage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(StorageEmptyMessage, StorageEmptyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -235,47 +267,35 @@ namespace DeckVisualizer
             {
                 if (picker.ShowDialog(this) == DialogResult.OK && picker.SelectedDeck != null)
                 {
-                    // Apply the selected deck to the grid row
                     UpdateSingleRowDisplay(targetRowPanel, picker.SelectedDeck, slotNamePrefix);
 
-                    // Clear out default prompt labels text strings
                     sourceButton.Text = "";
 
-                    // HIGH-PERFORMANCE IMAGE PASSING MECHANIC
                     if (picker.SelectedDeckImage != null)
                     {
-                        // Clean up old button images safely to prevent memory leaks
                         if (sourceButton.Image != null) sourceButton.Image.Dispose();
 
-                        // 1. Create a blank canvas matching your exact 128x146 button dimensions
                         Bitmap buttonCanvas = new Bitmap(sourceButton.Width, sourceButton.Height);
 
                         using (Graphics g = Graphics.FromImage(buttonCanvas))
                         {
                             g.Clear(Color.Transparent);
 
-                            // 2. REPLICATE THE DECK PICKER RATIO:
-                            // We find the scale factor between the picker window box and the button space.
-                            // This ensures the image zooms up and crops identically relative to the button!
                             float scaleX = (float)sourceButton.Width / (float)(deckPickerWindowWidth / 5);
                             float scaleY = (float)sourceButton.Height / (float)(deckPickerWindowHeight / 8);
 
-                            // 3. Apply the visual offsets proportionally
                             int targetOffsetX = (int)(-10 * scaleX);
                             int targetWidth = (int)(picker.SelectedDeckImage.Width * scaleX);
                             int targetHeight = (int)(picker.SelectedDeckImage.Height * scaleY);
 
-                            // 4. Draw the original image up-scaled and cropped perfectly to fit the button space
                             g.DrawImage(picker.SelectedDeckImage, targetOffsetX, 0, targetWidth, targetHeight);
                         }
 
-                        // Mount the scaled, cropped asset directly onto the button background
                         sourceButton.Image = buttonCanvas;
                     }
                     else
                     {
-                        // Sapphire fallback state if the chosen deck profile has an empty asset path
-                        sourceButton.BackColor = Color.FromArgb(40, 75, 95);
+                        sourceButton.BackColor = ActiveButtonColor;
                         sourceButton.Text = picker.SelectedDeck.DeckName;
                     }
                 }
@@ -296,7 +316,7 @@ namespace DeckVisualizer
                     Height = 146,
                     Margin = new Padding(6, 3, 6, 3),
                     SizeMode = PictureBoxSizeMode.Zoom,
-                    BackColor = Color.DimGray,
+                    BackColor = DefaultCardBackgroundColor,
                     CardLabel = $"{labelPrefix}\nSlot {i + 1}"
                 };
                 pic.MouseDown += Card_MouseDown;
@@ -317,9 +337,23 @@ namespace DeckVisualizer
                     string fullPath = "";
                     if (deck != null && deck.ImagePaths != null && i < deck.ImagePaths.Count && !string.IsNullOrEmpty(deck.ImagePaths[i]))
                     {
-                        fullPath = Path.IsPathRooted(deck.ImagePaths[i])
-                            ? deck.ImagePaths[i]
-                            : Path.Combine(baseDir, deck.ImagePaths[i]);
+                        string cleanPath = deck.ImagePaths[i];
+
+                        if (Path.IsPathRooted(cleanPath))
+                        {
+                            fullPath = cleanPath;
+                        }
+                        else
+                        {
+                            string testLocal = Path.Combine(baseDir, cleanPath);
+                            string testLocalRes = Path.Combine(baseDir, ResourcesFolderName, cleanPath);
+                            string testRootRes = Path.Combine(baseDir, "..", "..", "..", ResourcesFolderName, cleanPath);
+
+                            if (File.Exists(testLocal)) fullPath = testLocal;
+                            else if (File.Exists(testLocalRes)) fullPath = testLocalRes;
+                            else if (File.Exists(testRootRes)) fullPath = testRootRes;
+                            else fullPath = testLocal;
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(fullPath) && File.Exists(fullPath))
@@ -330,7 +364,9 @@ namespace DeckVisualizer
                     else
                     {
                         pic.Image = null;
-                        pic.CardLabel = deck != null ? $"{deck.DeckName}\nSlot {i + 1}\nMissing" : $"{labelPrefix}\nEmpty";
+                        pic.CardLabel = deck != null
+                            ? $"{deck.DeckName}\nSlot {i + 1}\n{CardMissingPlaceholderText}"
+                            : $"{labelPrefix}\n{CardEmptyPlaceholderText}";
                     }
                 }
             }
@@ -376,7 +412,7 @@ namespace DeckVisualizer
                     {
                         pic.Image = null;
                         pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0];
-                        pic.CardLabel = $"P1 Row {r + 1}\nSlot {p1Rows[r].Controls.IndexOf(pic) + 1}";
+                        pic.CardLabel = $"P1 Row {r + 1}\nSlot {p1Rows[r].Controls.IndexOf(pic) + 1}\n{CardEmptyPlaceholderText}";
                         pic.Invalidate();
                     }
                 }
@@ -390,21 +426,26 @@ namespace DeckVisualizer
                     {
                         pic.Image = null;
                         pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0];
-                        pic.CardLabel = $"P2 Row {r + 1}\nSlot {p2Rows[r].Controls.IndexOf(pic) + 1}";
+                        pic.CardLabel = $"P2 Row {r + 1}\nSlot {p2Rows[r].Controls.IndexOf(pic) + 1}\n{CardEmptyPlaceholderText}";
                         pic.Invalidate();
                     }
                 }
             }
 
             Button[] deckButtons = { p1Deck1Menu, p1Deck2Menu, p1Deck3Menu, p2Deck1Menu, p2Deck2Menu, p2Deck3Menu };
-            string[] defaultLabels = { "Select P1 Deck 1...", "Select P1 Deck 2...", "Select P1 Deck 3...", "Select P2 Deck 1...", "Select P2 Deck 2...", "Select P2 Deck 3..." };
 
             for (int i = 0; i < deckButtons.Length; i++)
             {
                 if (deckButtons[i] != null)
                 {
-                    deckButtons[i].Text = defaultLabels[i];
-                    deckButtons[i].BackColor = Color.FromArgb(45, 110, 75);
+                    if (deckButtons[i].Image != null)
+                    {
+                        deckButtons[i].Image.Dispose();
+                        deckButtons[i].Image = null;
+                    }
+
+                    deckButtons[i].Text = ButtonDefaultLabels[i];
+                    deckButtons[i].BackColor = DefaultButtonColor;
                 }
             }
         }
@@ -488,7 +529,7 @@ namespace DeckVisualizer
 
                 Button btnBatchSelect = new Button
                 {
-                    Text = "⚡ Batch Select 6 Images At Once",
+                    Text = EditorBatchSelectButton,
                     Location = new Point(120, 52),
                     Width = 300,
                     Height = 32,
@@ -508,7 +549,7 @@ namespace DeckVisualizer
 
                     Button btnBrowse = new Button
                     {
-                        Text = "Empty Slot...",
+                        Text = EditorEmptySlot,
                         Location = new Point(120, 95 + (i * 35)),
                         Width = 300,
                         Height = 26,
@@ -548,7 +589,7 @@ namespace DeckVisualizer
                 using (OpenFileDialog ofd = new OpenFileDialog())
                 {
                     ofd.Multiselect = true;
-                    ofd.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
+                    ofd.Filter = ImageFileFilters;
                     ofd.Title = "Select Exactly 6 Image Files for your Deck";
 
                     if (ofd.ShowDialog() == DialogResult.OK)
@@ -558,7 +599,7 @@ namespace DeckVisualizer
 
                         if (files.Length > 6)
                         {
-                            MessageBox.Show("You selected more than 6 images. Only the first 6 will be used.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(Form1.BatchLimitNotice, Form1.BatchLimitTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
 
                         int fillLimit = Math.Min(files.Length, 6);
@@ -576,7 +617,7 @@ namespace DeckVisualizer
             {
                 using (OpenFileDialog ofd = new OpenFileDialog())
                 {
-                    ofd.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
+                    ofd.Filter = ImageFileFilters;
                     ofd.Title = $"Select Image File for Card Slot {index + 1}";
 
                     if (ofd.ShowDialog() == DialogResult.OK)
@@ -593,7 +634,7 @@ namespace DeckVisualizer
                 string enteredName = txtDeckName.Text.Trim();
                 if (string.IsNullOrEmpty(enteredName))
                 {
-                    MessageBox.Show("Please type in a Deck Name first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Form1.EditorEmptyWarning, Form1.EditorEmptyTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -614,7 +655,7 @@ namespace DeckVisualizer
                 }
 
                 DeckConfig newDeck = new DeckConfig { DeckName = enteredName, ImagePaths = new List<string>(chosenPaths) };
-                string jsonPath = Path.Combine(baseDir, "decks.json");
+                string jsonPath = Path.Combine(baseDir, DecksDatabaseFileName);
                 AppSettings currentSettings = new AppSettings { AvailableDecks = new List<DeckConfig>() };
 
                 if (File.Exists(jsonPath))
@@ -633,7 +674,7 @@ namespace DeckVisualizer
 
                 string updatedJson = JsonSerializer.Serialize(currentSettings, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(jsonPath, updatedJson);
-                MessageBox.Show($"'{enteredName}' has been saved!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"'{enteredName}' has been saved!", Form1.SaveSuccessTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 txtDeckName.Clear();
                 for (int i = 0; i < 6; i++)
@@ -684,7 +725,7 @@ namespace DeckVisualizer
 
             public DeckPickerWindow(List<DeckConfig> decks)
             {             
-                this.Text = "Select Card Deck Layout Profile";
+                this.Text = Form1.DeckPickerWindowTitle;
                 this.Size = new Size(deckPickerWindowWidth, deckPickerWindowHeight);
                 this.StartPosition = FormStartPosition.CenterParent;
                 this.FormBorderStyle = FormBorderStyle.FixedDialog;
