@@ -355,32 +355,30 @@ namespace DeckVisualizer
 
         private void MasterResetButton_Click(object sender, EventArgs e)
         {
-            // 1. Fully reset all Player 1 rows data
             for (int r = 0; r < 3; r++)
             {
                 foreach (Control c in p1Rows[r].Controls)
                 {
                     if (c is CardPictureBox pic)
                     {
-                        pic.Image = null; // Clear image file reference completely
-                        pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0]; // Reset overlay to Off state
-                        pic.CardLabel = $"P1 Row {r + 1}\nSlot {p1Rows[r].Controls.IndexOf(pic) + 1}"; // Restore basic template text
-                        pic.Invalidate(); // Refresh graphic canvas painter routines
+                        pic.Image = null;
+                        pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0];
+                        pic.CardLabel = $"P1 Row {r + 1}\nSlot {p1Rows[r].Controls.IndexOf(pic) + 1}";
+                        pic.Invalidate();
                     }
                 }
             }
 
-            // 2. Fully reset all Player 2 rows data
             for (int r = 0; r < 3; r++)
             {
                 foreach (Control c in p2Rows[r].Controls)
                 {
                     if (c is CardPictureBox pic)
                     {
-                        pic.Image = null; // Clear image file reference completely
-                        pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0]; // Reset overlay to Off state
-                        pic.CardLabel = $"P2 Row {r + 1}\nSlot {p2Rows[r].Controls.IndexOf(pic) + 1}"; // Restore basic template text
-                        pic.Invalidate(); // Refresh graphic canvas painter routines
+                        pic.Image = null;
+                        pic.CurrentOverlay = CardOverlayState.OverlayCycleList[0];
+                        pic.CardLabel = $"P2 Row {r + 1}\nSlot {p2Rows[r].Controls.IndexOf(pic) + 1}";
+                        pic.Invalidate();
                     }
                 }
             }
@@ -389,10 +387,8 @@ namespace DeckVisualizer
             {
                 if (ctrl is Button btn && btn.Text != "Open Deck Editor")
                 {
-                    // Revert visual highlights back to neutral dark styles
                     btn.BackColor = Color.FromArgb(50, 50, 55);
 
-                    // Simple pattern match check routine to restore specific text strings
                     if (btn == p1Deck1Menu) btn.Text = "Select P1 Deck 1...";
                     else if (btn == p1Deck2Menu) btn.Text = "Select P1 Deck 2...";
                     else if (btn == p1Deck3Menu) btn.Text = "Select P1 Deck 3...";
