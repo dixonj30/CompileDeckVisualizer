@@ -10,8 +10,8 @@ namespace DeckVisualizer
     public partial class Form1 : Form
     {
         private List<DeckConfig> loadedDecks = new List<DeckConfig>();
-        private const int windowWidth = 750;
-        private const int windowHeight = 820;
+        private const int windowWidth = 980;
+        private const int windowHeight = 955;
         private const int deckPickerWindowWidth = 800;
         private const int deckPickerWindowHeight = 550;
 
@@ -28,7 +28,7 @@ namespace DeckVisualizer
             Panel customTitleBar = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 40,
+                Height = 25,
                 BackColor = Color.FromArgb(30, 30, 35)
             };
 
@@ -36,8 +36,8 @@ namespace DeckVisualizer
             {
                 Text = "Card Deck Layout Engine",
                 ForeColor = Color.White,
-                Font = new Font("Arial", 10, FontStyle.Bold),
-                Location = new Point(15, 10),
+                Font = new Font("Arial", 9, FontStyle.Bold),
+                Location = new Point(12, 5),
                 AutoSize = true
             };
             customTitleBar.Controls.Add(lblTitle);
@@ -48,9 +48,9 @@ namespace DeckVisualizer
                 ForeColor = Color.White,
                 BackColor = Color.FromArgb(50, 50, 55),
                 FlatStyle = FlatStyle.Flat,
-                Size = new Size(40, 30),
-                Location = new Point(windowWidth - 50, 5),
-                Font = new Font("Arial", 9, FontStyle.Bold)
+                Size = new Size(35, 21),
+                Location = new Point(windowWidth - 45, 2),
+                Font = new Font("Arial", 8, FontStyle.Bold)
             };
             btnClose.FlatAppearance.BorderSize = 0;
             btnClose.Click += (s, e) => this.Close();
@@ -102,10 +102,12 @@ namespace DeckVisualizer
                 Dock = DockStyle.Fill,
                 ColumnCount = 2,
                 Margin = new Padding(0),
-                Padding = new Padding(0)
+                Padding = new Padding(0),
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.None
             };
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 210));
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 540));
+            mainLayout.ColumnStyles.Clear();
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 220));
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 760));
 
             FlowLayoutPanel controlPanel = new FlowLayoutPanel
             {
@@ -113,12 +115,13 @@ namespace DeckVisualizer
                 FlowDirection = FlowDirection.TopDown,
                 Width = 210,
                 Padding = new Padding(0, 15, 0, 15),
+                Margin = new Padding(0),
                 AutoScroll = false,
                 BackColor = Color.FromArgb(35, 35, 40),
                 WrapContents = false
             };
 
-            Label lblP1Title = new Label { Text = "Player 1 Decks:", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 35, 0, 8), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
+            Label lblP1Title = new Label { Text = "Player 1 Decks:", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 120, 0, 8), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
             controlPanel.Controls.Add(lblP1Title);
 
             Button btnP1D1 = new Button { Text = "Select P1 Deck 1...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
@@ -164,14 +167,13 @@ namespace DeckVisualizer
             {
                 if (r == 3)
                 {
-                    boardLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+                    boardLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20f));
                 }
                 else
                 {
                     boardLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                 }
             }
-
 
             Panel horizontalDivider = new Panel
             {
@@ -185,8 +187,27 @@ namespace DeckVisualizer
 
             for (int i = 0; i < 3; i++)
             {
-                p1Rows[i] = new FlowLayoutPanel { Dock = DockStyle.Top, Width = 515, Height = (i == 0) ? 132 : 124, AutoScroll = false, BackColor = Color.FromArgb(40 + (i * 5), 40, 40), Margin = new Padding(0), Padding = new Padding(0, (i == 0) ? 8 : 0, 0, 0) };
-                p2Rows[i] = new FlowLayoutPanel { Dock = DockStyle.Top, Width = 515, Height = 124, AutoScroll = false, BackColor = Color.FromArgb(50 + (i * 5), 50, 50), Margin = new Padding(0), Padding = new Padding(0) };
+                p1Rows[i] = new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Top,
+                    Width = 735,
+                    Height = (i == 0) ? 150 : 152,
+                    AutoScroll = false,
+                    BackColor = Color.FromArgb(40 + (i * 5), 40, 40),
+                    Margin = new Padding(0),
+                    Padding = new Padding(0, (i == 0) ? 2 : 0, 0, 0)
+                };
+
+                p2Rows[i] = new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Top,
+                    Width = 735,
+                    Height = 152,
+                    AutoScroll = false,
+                    BackColor = Color.FromArgb(50 + (i * 5), 50, 50),
+                    Margin = new Padding(0),
+                    Padding = new Padding(0)
+                };
 
                 boardLayout.Controls.Add(p1Rows[i], 0, i);
                 boardLayout.Controls.Add(p2Rows[i], 0, i + 4);
@@ -231,10 +252,10 @@ namespace DeckVisualizer
             {
                 CardPictureBox pic = new CardPictureBox
                 {
-                    Width = 80,
-                    Height = 110,
-                    Margin = new Padding(4),
-                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Width = 110,
+                    Height = 146,
+                    Margin = new Padding(6, 3, 6, 3),
+                    SizeMode = PictureBoxSizeMode.Zoom,
                     BackColor = Color.DimGray,
                     CardLabel = $"{labelPrefix}\nSlot {i + 1}"
                 };
