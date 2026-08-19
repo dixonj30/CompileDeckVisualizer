@@ -235,9 +235,49 @@ namespace DeckVisualizer
             {
                 if (picker.ShowDialog(this) == DialogResult.OK && picker.SelectedDeck != null)
                 {
+                    // Apply the selected deck to the grid row
                     UpdateSingleRowDisplay(targetRowPanel, picker.SelectedDeck, slotNamePrefix);
-                    sourceButton.Text = picker.SelectedDeck.DeckName;
-                    sourceButton.BackColor = Color.FromArgb(35, 35, 40);
+
+                    // Clear out default prompt labels text strings
+                    sourceButton.Text = "";
+
+                    // HIGH-PERFORMANCE IMAGE PASSING MECHANIC
+                    if (picker.SelectedDeckImage != null)
+                    {
+                        // Clean up old button images safely to prevent memory leaks
+                        if (sourceButton.Image != null) sourceButton.Image.Dispose();
+
+                        // 1. Create a blank canvas matching your exact 128x146 button dimensions
+                        Bitmap buttonCanvas = new Bitmap(sourceButton.Width, sourceButton.Height);
+
+                        using (Graphics g = Graphics.FromImage(buttonCanvas))
+                        {
+                            g.Clear(Color.Transparent);
+
+                            // 2. REPLICATE THE DECK PICKER RATIO:
+                            // We find the scale factor between the picker window box and the button space.
+                            // This ensures the image zooms up and crops identically relative to the button!
+                            float scaleX = (float)sourceButton.Width / (float)(deckPickerWindowWidth / 5);
+                            float scaleY = (float)sourceButton.Height / (float)(deckPickerWindowHeight / 8);
+
+                            // 3. Apply the visual offsets proportionally
+                            int targetOffsetX = (int)(-10 * scaleX);
+                            int targetWidth = (int)(picker.SelectedDeckImage.Width * scaleX);
+                            int targetHeight = (int)(picker.SelectedDeckImage.Height * scaleY);
+
+                            // 4. Draw the original image up-scaled and cropped perfectly to fit the button space
+                            g.DrawImage(picker.SelectedDeckImage, targetOffsetX, 0, targetWidth, targetHeight);
+                        }
+
+                        // Mount the scaled, cropped asset directly onto the button background
+                        sourceButton.Image = buttonCanvas;
+                    }
+                    else
+                    {
+                        // Sapphire fallback state if the chosen deck profile has an empty asset path
+                        sourceButton.BackColor = Color.FromArgb(40, 75, 95);
+                        sourceButton.Text = picker.SelectedDeck.DeckName;
+                    }
                 }
             }
         }
@@ -364,7 +404,7 @@ namespace DeckVisualizer
                 if (deckButtons[i] != null)
                 {
                     deckButtons[i].Text = defaultLabels[i];
-                    deckButtons[i].BackColor = Color.FromArgb(50, 50, 55);
+                    deckButtons[i].BackColor = Color.FromArgb(45, 110, 75);
                 }
             }
         }
@@ -640,6 +680,7 @@ namespace DeckVisualizer
         public class DeckPickerWindow : Form
         {
             public DeckConfig SelectedDeck { get; private set; }
+            public Image SelectedDeckImage { get; private set; }
 
             public DeckPickerWindow(List<DeckConfig> decks)
             {             
@@ -697,13 +738,13 @@ namespace DeckVisualizer
                     Action selectAction = () =>
                     {
                         this.SelectedDeck = deck;
+                        this.SelectedDeckImage = imgCover.Image;
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     };
 
                     deckTile.Click += (s, e) => selectAction();
                     imgCover.Click += (s, e) => selectAction();
-
                     pickerGrid.Controls.Add(deckTile);
                 }
 
