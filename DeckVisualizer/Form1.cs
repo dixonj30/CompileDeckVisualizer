@@ -19,6 +19,8 @@ namespace DeckVisualizer
         private List<DeckConfig> loadedDecks = new List<DeckConfig>();
         private const int windowWidth = 750;
         private const int windowHeight = 820;
+        private const int deckPickerWindowWidth = 800;
+        private const int deckPickerWindowHeight = 550;
 
         public Form1()
         {
@@ -102,7 +104,7 @@ namespace DeckVisualizer
             }
         }
 
-        private void RefreshAllMenus()
+        /*private void RefreshAllMenus()
         {
             LoadDecksFromDisk();
             ComboBox[] allMenus = { p1Deck1Menu, p1Deck2Menu, p1Deck3Menu, p2Deck1Menu, p2Deck2Menu, p2Deck3Menu };
@@ -138,7 +140,7 @@ namespace DeckVisualizer
                     menu.SelectedIndex = 0;
                 }
             }
-        }
+        } */
 
         private FlowLayoutPanel[] p1Rows = new FlowLayoutPanel[3];
         private FlowLayoutPanel[] p2Rows = new FlowLayoutPanel[3];
@@ -155,88 +157,51 @@ namespace DeckVisualizer
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 210));
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 540));
 
-            // Left Side Control Panel - Width fixed to 210
             FlowLayoutPanel controlPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
                 Width = 210,
                 Padding = new Padding(0, 15, 0, 15),
-                Margin = new Padding(0),
                 AutoScroll = false,
                 BackColor = Color.FromArgb(35, 35, 40),
                 WrapContents = false
             };
 
-            Label lblP1Title = new Label
-            {
-                Text = "Player 1 Decks",
-                Width = 200,
-                ForeColor = Color.White,
-                Font = new Font("Arial", 9, FontStyle.Bold),
-                Margin = new Padding(0, 100, 0, 0),
-                Anchor = AnchorStyles.None,
-                TextAlign = ContentAlignment.MiddleCenter 
-            };
+            Label lblP1Title = new Label { Text = "Player 1 Decks:", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 35, 0, 8), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
             controlPanel.Controls.Add(lblP1Title);
 
-            p1Deck1Menu = new ComboBox { Width = 170, DropDownStyle = ComboBoxStyle.DropDownList, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
-            p1Deck2Menu = new ComboBox { Width = 170, DropDownStyle = ComboBoxStyle.DropDownList, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
-            p1Deck3Menu = new ComboBox { Width = 170, DropDownStyle = ComboBoxStyle.DropDownList, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
+            Button btnP1D1 = new Button { Text = "Select P1 Deck 1...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
+            Button btnP1D2 = new Button { Text = "Select P1 Deck 2...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
+            Button btnP1D3 = new Button { Text = "Select P1 Deck 3...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
 
-            p1Deck1Menu.SelectedIndexChanged += (s, e) => UpdateSingleRowDisplay(p1Rows[0], p1Deck1Menu.SelectedItem as DeckConfig, "P1 Deck 1");
-            p1Deck2Menu.SelectedIndexChanged += (s, e) => UpdateSingleRowDisplay(p1Rows[1], p1Deck2Menu.SelectedItem as DeckConfig, "P1 Deck 2");
-            p1Deck3Menu.SelectedIndexChanged += (s, e) => UpdateSingleRowDisplay(p1Rows[2], p1Deck3Menu.SelectedItem as DeckConfig, "P1 Deck 3");
+            btnP1D1.Click += (s, e) => OpenVisualDeckPicker(p1Rows[0], "P1 Deck 1", btnP1D1);
+            btnP1D2.Click += (s, e) => OpenVisualDeckPicker(p1Rows[1], "P1 Deck 2", btnP1D2);
+            btnP1D3.Click += (s, e) => OpenVisualDeckPicker(p1Rows[2], "P1 Deck 3", btnP1D3);
 
-            controlPanel.Controls.Add(p1Deck1Menu);
-            controlPanel.Controls.Add(p1Deck2Menu);
-            controlPanel.Controls.Add(p1Deck3Menu);
+            controlPanel.Controls.Add(btnP1D1);
+            controlPanel.Controls.Add(btnP1D2);
+            controlPanel.Controls.Add(btnP1D3);
 
-            Button btnOpenEditor = new Button
-            {
-                Text = "Open Deck Editor",
-                Width = 150,
-                Height = 35,
-                BackColor = Color.FromArgb(50, 65, 80),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Arial", 9, FontStyle.Bold),
-                Margin = new Padding(0, 150, 0, 0),
-                Anchor = AnchorStyles.None
-            };
+            Button btnOpenEditor = new Button { Text = "Open Deck Editor", Width = 150, Height = 35, BackColor = Color.FromArgb(50, 65, 80), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 140, 0, 0), Anchor = AnchorStyles.None };
             btnOpenEditor.FlatAppearance.BorderSize = 0;
-            btnOpenEditor.Click += (s, e) =>
-            {
-                using (EditorWindow popup = new EditorWindow(RefreshAllMenus))
-                {
-                    popup.ShowDialog(this);
-                }
-            };
+            btnOpenEditor.Click += (s, e) => { using (EditorWindow popup = new EditorWindow(RefreshAllMenus)) { popup.ShowDialog(this); } };
             controlPanel.Controls.Add(btnOpenEditor);
 
-            Label lblP2Title = new Label
-            {
-                Text = "Player 2 Decks",
-                Width = 200,
-                ForeColor = Color.White,
-                Font = new Font("Arial", 9, FontStyle.Bold),
-                Margin = new Padding(0, 105, 0, 0),
-                Anchor = AnchorStyles.None,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
+            Label lblP2Title = new Label { Text = "Player 2 Decks:", Width = 200, ForeColor = Color.White, Font = new Font("Arial", 9, FontStyle.Bold), Margin = new Padding(0, 160, 0, 0), Anchor = AnchorStyles.None, TextAlign = ContentAlignment.MiddleCenter };
             controlPanel.Controls.Add(lblP2Title);
 
-            p2Deck1Menu = new ComboBox { Width = 170, DropDownStyle = ComboBoxStyle.DropDownList, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
-            p2Deck2Menu = new ComboBox { Width = 170, DropDownStyle = ComboBoxStyle.DropDownList, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
-            p2Deck3Menu = new ComboBox { Width = 170, DropDownStyle = ComboBoxStyle.DropDownList, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
+            Button btnP2D1 = new Button { Text = "Select P2 Deck 1...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
+            Button btnP2D2 = new Button { Text = "Select P2 Deck 2...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
+            Button btnP2D3 = new Button { Text = "Select P2 Deck 3...", Width = 170, Height = 30, BackColor = Color.FromArgb(50, 50, 55), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Anchor = AnchorStyles.None };
 
-            p2Deck1Menu.SelectedIndexChanged += (s, e) => UpdateSingleRowDisplay(p2Rows[0], p2Deck1Menu.SelectedItem as DeckConfig, "P2 Deck 1");
-            p2Deck2Menu.SelectedIndexChanged += (s, e) => UpdateSingleRowDisplay(p2Rows[1], p2Deck2Menu.SelectedItem as DeckConfig, "P2 Deck 2");
-            p2Deck3Menu.SelectedIndexChanged += (s, e) => UpdateSingleRowDisplay(p2Rows[2], p2Deck3Menu.SelectedItem as DeckConfig, "P2 Deck 3");
+            btnP2D1.Click += (s, e) => OpenVisualDeckPicker(p2Rows[0], "P2 Deck 1", btnP2D1);
+            btnP2D2.Click += (s, e) => OpenVisualDeckPicker(p2Rows[1], "P2 Deck 2", btnP2D2);
+            btnP2D3.Click += (s, e) => OpenVisualDeckPicker(p2Rows[2], "P2 Deck 3", btnP2D3);
 
-            controlPanel.Controls.Add(p2Deck1Menu);
-            controlPanel.Controls.Add(p2Deck2Menu);
-            controlPanel.Controls.Add(p2Deck3Menu);
+            controlPanel.Controls.Add(btnP2D1);
+            controlPanel.Controls.Add(btnP2D2);
+            controlPanel.Controls.Add(btnP2D3);
 
             mainLayout.Dock = DockStyle.Fill;
             this.Controls.Add(mainLayout);
@@ -285,6 +250,29 @@ namespace DeckVisualizer
 
             RefreshAllMenus();
         }
+
+        private void OpenVisualDeckPicker(FlowLayoutPanel targetRowPanel, string slotNamePrefix, Button sourceButton)
+        {
+            LoadDecksFromDisk();
+
+            if (loadedDecks.Count == 0)
+            {
+                MessageBox.Show("No custom decks found! Open the Deck Editor to build your first card deck profile.", "Empty Storage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (DeckPickerWindow picker = new DeckPickerWindow(loadedDecks))
+            {
+                if (picker.ShowDialog(this) == DialogResult.OK && picker.SelectedDeck != null)
+                {
+                    UpdateSingleRowDisplay(targetRowPanel, picker.SelectedDeck, slotNamePrefix);
+                    sourceButton.Text = picker.SelectedDeck.DeckName;
+                    sourceButton.BackColor = Color.FromArgb(45, 80, 70);
+                }
+            }
+        }
+
+        private void RefreshAllMenus() { }
 
         private void InitializeRowCards(FlowLayoutPanel rowPanel, string labelPrefix)
         {
@@ -352,7 +340,7 @@ namespace DeckVisualizer
                     }
                     else if (pic.OutlineColor == Color.Blue)
                     {
-                        pic.HasOutline = false; // Turn off, loop resets
+                        pic.HasOutline = false;
                     }
                 }
 
@@ -530,7 +518,6 @@ namespace DeckVisualizer
                     btnBrowse.FlatAppearance.BorderSize = 1;
                     btnBrowse.FlatAppearance.BorderColor = Color.FromArgb(80, 80, 85);
 
-                    // Keep individual clicks as an optional manual fallback edit tool
                     btnBrowse.Click += (s, e) => BrowseSingleCardImage(slotIndex, btnBrowse);
 
                     slotButtons[slotIndex] = btnBrowse;
@@ -690,6 +677,71 @@ namespace DeckVisualizer
 
                 DeckEditorPanel editorPanel = new DeckEditorPanel(onSaveCallback) { Dock = DockStyle.Fill };
                 this.Controls.Add(editorPanel);
+            }
+        }
+
+        public class DeckPickerWindow : Form
+        {
+            public DeckConfig SelectedDeck { get; private set; }
+
+            public DeckPickerWindow(List<DeckConfig> decks)
+            {             
+                this.Text = "Select Card Deck Layout Profile";
+                this.Size = new Size(deckPickerWindowWidth, deckPickerWindowHeight);
+                this.StartPosition = FormStartPosition.CenterParent;
+                this.FormBorderStyle = FormBorderStyle.FixedDialog;
+                this.MaximizeBox = false;
+                this.MinimizeBox = false;
+                this.BackColor = Color.FromArgb(58, 61, 64);
+
+                FlowLayoutPanel pickerGrid = new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    AutoScroll = true,
+                    Padding = new Padding(15),
+                    Margin = new Padding(0)
+                };
+
+                foreach (var deck in decks)
+                {
+                    Panel deckTile = new Panel
+                    {
+                        Width = 170,
+                        Height = 70,
+                        Margin = new Padding(3),
+                        BackColor = Color.Transparent,
+                        Cursor = Cursors.Hand
+                    };
+
+                    PictureBox imgCover = new PictureBox
+                    {
+                        Location = new Point(-10, 0),
+                        Size = new Size(170, 70),
+                        SizeMode = PictureBoxSizeMode.Normal,
+                        BackColor = Color.Transparent
+                    };
+
+                    if (deck.ImagePaths != null && deck.ImagePaths.Count > 0 && File.Exists(deck.ImagePaths[0]))
+                    {
+                        imgCover.Image = Image.FromFile(deck.ImagePaths[0]);
+                    }
+
+                    deckTile.Controls.Add(imgCover);
+
+                    Action selectAction = () =>
+                    {
+                        this.SelectedDeck = deck;
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    };
+
+                    deckTile.Click += (s, e) => selectAction();
+                    imgCover.Click += (s, e) => selectAction();
+
+                    pickerGrid.Controls.Add(deckTile);
+                }
+
+                this.Controls.Add(pickerGrid);
             }
         }
     }
