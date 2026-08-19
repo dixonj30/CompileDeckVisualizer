@@ -302,67 +302,41 @@ namespace DeckVisualizer
         {
             if (sender is CardPictureBox pic)
             {
+                var cycleList = CardOverlayState.OverlayCycleList;
+                int currentIndex = cycleList.IndexOf(pic.CurrentOverlay);
+
+                if (currentIndex == -1) currentIndex = 0;
+
+                int maxStates = cycleList.Count;
 
                 if (e.Button == MouseButtons.Left)
                 {
-                    if (!pic.HasOutline)
-                    {
-                        pic.HasOutline = true;
-                        pic.OutlineColor = Color.Red;
-                    }
-                    else if (pic.OutlineColor == Color.Red)
-                    {
-                        pic.OutlineColor = Color.Green;
-                    }
-                    else if (pic.OutlineColor == Color.Green)
-                    {
-                        pic.OutlineColor = Color.Blue;
-                    }
-                    else if (pic.OutlineColor == Color.Blue)
-                    {
-                        pic.HasOutline = false;
-                    }
+                    currentIndex = (currentIndex + 1) % maxStates;
                 }
-
                 else if (e.Button == MouseButtons.Right)
                 {
-                    if (!pic.HasOutline)
-                    {
-                        pic.HasOutline = true;
-                        pic.OutlineColor = Color.Blue;
-                    }
-                    else if (pic.OutlineColor == Color.Blue)
-                    {
-                        pic.OutlineColor = Color.Green;
-                    }
-                    else if (pic.OutlineColor == Color.Green)
-                    {
-                        pic.OutlineColor = Color.Red;
-                    }
-                    else if (pic.OutlineColor == Color.Red)
-                    {
-                        pic.HasOutline = false;
-                    }
+                    currentIndex = (currentIndex - 1 + maxStates) % maxStates;
                 }
+                else
+                {
+                    return;
+                }
+
+                pic.CurrentOverlay = cycleList[currentIndex];
+
+                pic.Invalidate();
             }
         }
 
         public class CardPictureBox : PictureBox
         {
-            private bool hasOutline = false;
-            private Color outlineColor = Color.Red;
-            public string CardLabel { get; set; } = "";
+            public CardOverlayState CurrentOverlay { get; set; }
+            public string CardLabel { get; set; }
 
-            public bool HasOutline
+            public CardPictureBox()
             {
-                get => hasOutline;
-                set { hasOutline = value; Invalidate(); }
-            }
-
-            public Color OutlineColor
-            {
-                get => outlineColor;
-                set { outlineColor = value; Invalidate(); }
+                this.DoubleBuffered = true;
+                this.CurrentOverlay = new CardOverlayState(Color.Transparent, "");
             }
 
             protected override void OnPaint(PaintEventArgs pe)
@@ -379,54 +353,26 @@ namespace DeckVisualizer
                     }
                 }
 
-                if (hasOutline)
+                if (this.CurrentOverlay.WashColor != Color.Transparent)
                 {
                     pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-                    int[] glowSizes = { 8, 5, 2 };
-
-                    foreach (int currentBorderSize in glowSizes)
+                    using (SolidBrush overlayBrush = new SolidBrush(this.CurrentOverlay.WashColor))
                     {
-                        Rectangle rect = new Rectangle(
-                            currentBorderSize / 2,
-                            currentBorderSize / 2,
-                            this.Width - currentBorderSize,
-                            this.Height - currentBorderSize
-                        );
+                        pe.Graphics.FillRectangle(overlayBrush, this.ClientRectangle);
+                    }
 
-                        using (System.Drawing.Drawing2D.LinearGradientBrush glowBrush =
-                            new System.Drawing.Drawing2D.LinearGradientBrush(rect, Color.Black, Color.White, 45f))
+                    using (Font textFont = new Font("Impact", 13, FontStyle.Bold))
+                    using (Brush textBrush = new SolidBrush(Color.White))
+                    using (StringFormat sf = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                    {
+                        Rectangle shadowRect = new Rectangle(this.ClientRectangle.X + 1, this.ClientRectangle.Y + 1, this.ClientRectangle.Width, this.ClientRectangle.Height);
+                        using (Brush shadowBrush = new SolidBrush(Color.FromArgb(180, Color.Black)))
                         {
-                            Color[] colorPalette;
-                            if (outlineColor == Color.Red)
-                            {
-                                colorPalette = new Color[] { Color.Purple, Color.Crimson, Color.OrangeRed, Color.HotPink };
-                            }
-                            else if (outlineColor == Color.Green)
-                            {
-                                colorPalette = new Color[] { Color.DarkGreen, Color.LimeGreen, Color.Aquamarine, Color.LightCyan };
-                            }
-                            else if (outlineColor == Color.Blue)
-                            {
-                                colorPalette = new Color[] { Color.MidnightBlue, Color.RoyalBlue, Color.DeepSkyBlue, Color.Cyan };
-                            }
-                            else 
-                            {
-                                colorPalette = new Color[] { Color.DarkOrange, Color.Gold, Color.Yellow, Color.LightYellow };
-                            }
-
-                            float[] colorPositions = { 0.0f, 0.35f, 0.7f, 1.0f };
-
-                            System.Drawing.Drawing2D.ColorBlend multiBlend = new System.Drawing.Drawing2D.ColorBlend();
-                            multiBlend.Colors = colorPalette;
-                            multiBlend.Positions = colorPositions;
-                            glowBrush.InterpolationColors = multiBlend;
-
-                            using (Pen glowingPen = new Pen(glowBrush, currentBorderSize))
-                            {
-                                pe.Graphics.DrawRectangle(glowingPen, rect);
-                            }
+                            pe.Graphics.DrawString(this.CurrentOverlay.Label, textFont, shadowBrush, shadowRect, sf);
                         }
+
+                        pe.Graphics.DrawString(this.CurrentOverlay.Label, textFont, textBrush, this.ClientRectangle, sf);
                     }
                 }
             }
