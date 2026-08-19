@@ -9,13 +9,6 @@ namespace DeckVisualizer
 {
     public partial class Form1 : Form
     {
-        private TabPage editorPage;
-
-        private FlowLayoutPanel p1Panel;
-        private FlowLayoutPanel p2Panel;
-        private ComboBox p1Deck1Menu, p1Deck2Menu, p1Deck3Menu;
-        private ComboBox p2Deck1Menu, p2Deck2Menu, p2Deck3Menu;
-        private Color currentOutlineColor = Color.Red;
         private List<DeckConfig> loadedDecks = new List<DeckConfig>();
         private const int windowWidth = 750;
         private const int windowHeight = 820;
@@ -77,11 +70,6 @@ namespace DeckVisualizer
 
             LoadDecksFromDisk();
             SetupGameTab();
-        }
-
-        private void InitializeTabs()
-        {
-            editorPage = new TabPage { Text = "Deck Editor" };
         }
 
         private void LoadDecksFromDisk()
@@ -338,11 +326,6 @@ namespace DeckVisualizer
             }
         }
 
-        private void SetupEditorTab()
-        {
-            DeckEditorPanel editorPanel = new DeckEditorPanel(RefreshAllMenus) { Dock = DockStyle.Fill };
-            editorPage.Controls.Add(editorPanel);
-        }
         public class CardPictureBox : PictureBox
         {
             private bool hasOutline = false;
@@ -542,22 +525,6 @@ namespace DeckVisualizer
             }
 
             private void BrowseSingleCardImage(int index, Button targetButton)
-            {
-                using (OpenFileDialog ofd = new OpenFileDialog())
-                {
-                    ofd.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
-                    ofd.Title = $"Select Image File for Card Slot {index + 1}";
-
-                    if (ofd.ShowDialog() == DialogResult.OK)
-                    {
-                        chosenPaths[index] = ofd.FileName;
-                        targetButton.Text = Path.GetFileName(ofd.FileName);
-                        targetButton.BackColor = Color.FromArgb(40, 75, 95);
-                    }
-                }
-            }
-
-            private void BrowseForCardImage(int index, Button targetButton)
             {
                 using (OpenFileDialog ofd = new OpenFileDialog())
                 {
