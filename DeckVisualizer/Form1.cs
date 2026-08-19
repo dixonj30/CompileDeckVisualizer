@@ -260,15 +260,24 @@ namespace DeckVisualizer
         private void UpdateSingleRowDisplay(FlowLayoutPanel rowPanel, DeckConfig deck, string labelPrefix)
         {
             if (rowPanel.Controls.Count < 6) return;
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
 
             for (int i = 0; i < 6; i++)
             {
                 CardPictureBox pic = rowPanel.Controls[i] as CardPictureBox;
                 if (pic != null)
                 {
-                    if (deck != null && deck.ImagePaths != null && i < deck.ImagePaths.Count && File.Exists(deck.ImagePaths[i]))
+                    string fullPath = "";
+                    if (deck != null && deck.ImagePaths != null && i < deck.ImagePaths.Count && !string.IsNullOrEmpty(deck.ImagePaths[i]))
                     {
-                        pic.Image = Image.FromFile(deck.ImagePaths[i]);
+                        fullPath = Path.IsPathRooted(deck.ImagePaths[i])
+                            ? deck.ImagePaths[i]
+                            : Path.Combine(baseDir, deck.ImagePaths[i]);
+                    }
+
+                    if (!string.IsNullOrEmpty(fullPath) && File.Exists(fullPath))
+                    {
+                        pic.Image = Image.FromFile(fullPath);
                         pic.CardLabel = "";
                     }
                     else
@@ -573,13 +582,24 @@ namespace DeckVisualizer
                     return;
                 }
 
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+
                 for (int i = 0; i < 6; i++)
                 {
-                    if (chosenPaths[i] == null) chosenPaths[i] = "";
+                    if (string.IsNullOrEmpty(chosenPaths[i]))
+                    {
+                        chosenPaths[i] = "";
+                        continue;
+                    }
+
+                    if (chosenPaths[i].StartsWith(baseDir, StringComparison.OrdinalIgnoreCase))
+                    {
+                        chosenPaths[i] = chosenPaths[i].Substring(baseDir.Length);
+                    }
                 }
 
                 DeckConfig newDeck = new DeckConfig { DeckName = enteredName, ImagePaths = new List<string>(chosenPaths) };
-                string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "decks.json");
+                string jsonPath = Path.Combine(baseDir, "decks.json");
                 AppSettings currentSettings = new AppSettings { AvailableDecks = new List<DeckConfig>() };
 
                 if (File.Exists(jsonPath))
@@ -664,6 +684,7 @@ namespace DeckVisualizer
                     Margin = new Padding(0)
                 };
 
+
                 foreach (var deck in decks)
                 {
                     Panel deckTile = new Panel
@@ -683,9 +704,17 @@ namespace DeckVisualizer
                         BackColor = Color.Transparent
                     };
 
-                    if (deck.ImagePaths != null && deck.ImagePaths.Count > 0 && File.Exists(deck.ImagePaths[0]))
+                    if (deck.ImagePaths != null && deck.ImagePaths.Count > 0 && !string.IsNullOrEmpty(deck.ImagePaths[0]))
                     {
-                        imgCover.Image = Image.FromFile(deck.ImagePaths[0]);
+                        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                        string fullPath = Path.IsPathRooted(deck.ImagePaths[0])
+                            ? deck.ImagePaths[0]
+                            : Path.Combine(baseDir, deck.ImagePaths[0]);
+
+                        if (File.Exists(fullPath))
+                        {
+                            imgCover.Image = Image.FromFile(fullPath);
+                        }
                     }
 
                     deckTile.Controls.Add(imgCover);

@@ -1,0 +1,499 @@
+{
+  "AvailableDecks": [
+    {
+      "DeckName": "Water",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Water\\Water0.jpg",
+        "C:\\CompileDecks\\Main1\\Water\\Water1.jpg",
+        "C:\\CompileDecks\\Main1\\Water\\Water2.jpg",
+        "C:\\CompileDecks\\Main1\\Water\\Water3.jpg",
+        "C:\\CompileDecks\\Main1\\Water\\Water4.jpg",
+        "C:\\CompileDecks\\Main1\\Water\\Water5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Gravity",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Gravity\\Gravity0.jpg",
+        "C:\\CompileDecks\\Main1\\Gravity\\Gravity1.jpg",
+        "C:\\CompileDecks\\Main1\\Gravity\\Gravity2.jpg",
+        "C:\\CompileDecks\\Main1\\Gravity\\Gravity4.jpg",
+        "C:\\CompileDecks\\Main1\\Gravity\\Gravity5.jpg",
+        "C:\\CompileDecks\\Main1\\Gravity\\Gravity6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Apathy",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Apathy\\Apathy0.jpg",
+        "C:\\CompileDecks\\Main1\\Apathy\\Apathy1.jpg",
+        "C:\\CompileDecks\\Main1\\Apathy\\Apathy2.jpg",
+        "C:\\CompileDecks\\Main1\\Apathy\\Apathy3.jpg",
+        "C:\\CompileDecks\\Main1\\Apathy\\Apathy4.jpg",
+        "C:\\CompileDecks\\Main1\\Apathy\\Apathy5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Darkness",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Darkness\\Darkness0.jpg",
+        "C:\\CompileDecks\\Main1\\Darkness\\Darkness1.jpg",
+        "C:\\CompileDecks\\Main1\\Darkness\\Darkness2.jpg",
+        "C:\\CompileDecks\\Main1\\Darkness\\Darkness3.jpg",
+        "C:\\CompileDecks\\Main1\\Darkness\\Darkness4.jpg",
+        "C:\\CompileDecks\\Main1\\Darkness\\Darkness5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Death",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Death\\Death0.jpg",
+        "C:\\CompileDecks\\Main1\\Death\\Death1.jpg",
+        "C:\\CompileDecks\\Main1\\Death\\Death2.jpg",
+        "C:\\CompileDecks\\Main1\\Death\\Death3.jpg",
+        "C:\\CompileDecks\\Main1\\Death\\Death4.jpg",
+        "C:\\CompileDecks\\Main1\\Death\\Death5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Fire",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Fire\\Fire0.jpg",
+        "C:\\CompileDecks\\Main1\\Fire\\Fire1.jpg",
+        "C:\\CompileDecks\\Main1\\Fire\\Fire2.jpg",
+        "C:\\CompileDecks\\Main1\\Fire\\Fire3.jpg",
+        "C:\\CompileDecks\\Main1\\Fire\\Fire4.jpg",
+        "C:\\CompileDecks\\Main1\\Fire\\Fire5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Hate",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Hate\\Hate0.jpg",
+        "C:\\CompileDecks\\Main1\\Hate\\Hate1.jpg",
+        "C:\\CompileDecks\\Main1\\Hate\\Hate2.jpg",
+        "C:\\CompileDecks\\Main1\\Hate\\Hate3.jpg",
+        "C:\\CompileDecks\\Main1\\Hate\\Hate4.jpg",
+        "C:\\CompileDecks\\Main1\\Hate\\Hate5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Life",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Life\\Life0.jpg",
+        "C:\\CompileDecks\\Main1\\Life\\Life1.jpg",
+        "C:\\CompileDecks\\Main1\\Life\\Life2.jpg",
+        "C:\\CompileDecks\\Main1\\Life\\Life3.jpg",
+        "C:\\CompileDecks\\Main1\\Life\\Life4.jpg",
+        "C:\\CompileDecks\\Main1\\Life\\Life5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Light",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Light\\Light0.jpg",
+        "C:\\CompileDecks\\Main1\\Light\\Light1.jpg",
+        "C:\\CompileDecks\\Main1\\Light\\Light2.jpg",
+        "C:\\CompileDecks\\Main1\\Light\\Light3.jpg",
+        "C:\\CompileDecks\\Main1\\Light\\Light4.jpg",
+        "C:\\CompileDecks\\Main1\\Light\\Light5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Love",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Love\\Love1.jpg",
+        "C:\\CompileDecks\\Main1\\Love\\Love2.jpg",
+        "C:\\CompileDecks\\Main1\\Love\\Love3.jpg",
+        "C:\\CompileDecks\\Main1\\Love\\Love4.jpg",
+        "C:\\CompileDecks\\Main1\\Love\\Love5.jpg",
+        "C:\\CompileDecks\\Main1\\Love\\Love6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Metal",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Metal\\Metal0.jpg",
+        "C:\\CompileDecks\\Main1\\Metal\\Metal1.jpg",
+        "C:\\CompileDecks\\Main1\\Metal\\Metal2.jpg",
+        "C:\\CompileDecks\\Main1\\Metal\\Metal3.jpg",
+        "C:\\CompileDecks\\Main1\\Metal\\Metal5.jpg",
+        "C:\\CompileDecks\\Main1\\Metal\\Metal6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Plague",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Plague\\Plague0.jpg",
+        "C:\\CompileDecks\\Main1\\Plague\\Plague1.jpg",
+        "C:\\CompileDecks\\Main1\\Plague\\Plague2.jpg",
+        "C:\\CompileDecks\\Main1\\Plague\\Plague3.jpg",
+        "C:\\CompileDecks\\Main1\\Plague\\Plague4.jpg",
+        "C:\\CompileDecks\\Main1\\Plague\\Plague5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Psychic",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Psychic\\Psychic0.jpg",
+        "C:\\CompileDecks\\Main1\\Psychic\\Psychic1.jpg",
+        "C:\\CompileDecks\\Main1\\Psychic\\Psychic2.jpg",
+        "C:\\CompileDecks\\Main1\\Psychic\\Psychic3.jpg",
+        "C:\\CompileDecks\\Main1\\Psychic\\Psychic4.jpg",
+        "C:\\CompileDecks\\Main1\\Psychic\\Psychic5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Speed",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Speed\\Speed0.jpg",
+        "C:\\CompileDecks\\Main1\\Speed\\Speed1.jpg",
+        "C:\\CompileDecks\\Main1\\Speed\\Speed2.jpg",
+        "C:\\CompileDecks\\Main1\\Speed\\Speed3.jpg",
+        "C:\\CompileDecks\\Main1\\Speed\\Speed4.jpg",
+        "C:\\CompileDecks\\Main1\\Speed\\Speed5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Spirit",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main1\\Spirit\\Spirit0.jpg",
+        "C:\\CompileDecks\\Main1\\Spirit\\Spirit1.jpg",
+        "C:\\CompileDecks\\Main1\\Spirit\\Spirit2.jpg",
+        "C:\\CompileDecks\\Main1\\Spirit\\Spirit3.jpg",
+        "C:\\CompileDecks\\Main1\\Spirit\\Spirit4.jpg",
+        "C:\\CompileDecks\\Main1\\Spirit\\Spirit5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Assimilation",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Assimilation\\Assimilation0.jpg",
+        "C:\\CompileDecks\\Main2\\Assimilation\\Assimilation1.jpg",
+        "C:\\CompileDecks\\Main2\\Assimilation\\Assimilation2.jpg",
+        "C:\\CompileDecks\\Main2\\Assimilation\\Assimilation4.jpg",
+        "C:\\CompileDecks\\Main2\\Assimilation\\Assimilation5.jpg",
+        "C:\\CompileDecks\\Main2\\Assimilation\\Assimilation6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Chaos",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Chaos\\Chaos0.jpg",
+        "C:\\CompileDecks\\Main2\\Chaos\\Chaos1.jpg",
+        "C:\\CompileDecks\\Main2\\Chaos\\Chaos2.jpg",
+        "C:\\CompileDecks\\Main2\\Chaos\\Chaos3.jpg",
+        "C:\\CompileDecks\\Main2\\Chaos\\Chaos4.jpg",
+        "C:\\CompileDecks\\Main2\\Chaos\\Chaos5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Clarity",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Clarity\\Clarity0.jpg",
+        "C:\\CompileDecks\\Main2\\Clarity\\Clarity1.jpg",
+        "C:\\CompileDecks\\Main2\\Clarity\\Clarity2.jpg",
+        "C:\\CompileDecks\\Main2\\Clarity\\Clarity3.jpg",
+        "C:\\CompileDecks\\Main2\\Clarity\\Clarity4.jpg",
+        "C:\\CompileDecks\\Main2\\Clarity\\Clarity5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Corruption",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Corruption\\Corruption0.jpg",
+        "C:\\CompileDecks\\Main2\\Corruption\\Corruption1.jpg",
+        "C:\\CompileDecks\\Main2\\Corruption\\Corruption2.jpg",
+        "C:\\CompileDecks\\Main2\\Corruption\\Corruption3.jpg",
+        "C:\\CompileDecks\\Main2\\Corruption\\Corruption5.jpg",
+        "C:\\CompileDecks\\Main2\\Corruption\\Corruption6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Courage",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Courage\\Courage0.jpg",
+        "C:\\CompileDecks\\Main2\\Courage\\Courage1.jpg",
+        "C:\\CompileDecks\\Main2\\Courage\\Courage2.jpg",
+        "C:\\CompileDecks\\Main2\\Courage\\Courage3.jpg",
+        "C:\\CompileDecks\\Main2\\Courage\\Courage5.jpg",
+        "C:\\CompileDecks\\Main2\\Courage\\Courage6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Diversity",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Diversity\\Diversity0.jpg",
+        "C:\\CompileDecks\\Main2\\Diversity\\Diversity1.jpg",
+        "C:\\CompileDecks\\Main2\\Diversity\\Diversity3.jpg",
+        "C:\\CompileDecks\\Main2\\Diversity\\Diversity4.jpg",
+        "C:\\CompileDecks\\Main2\\Diversity\\Diversity5.jpg",
+        "C:\\CompileDecks\\Main2\\Diversity\\Diversity6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Fear",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Fear\\Fear0.jpg",
+        "C:\\CompileDecks\\Main2\\Fear\\Fear1.jpg",
+        "C:\\CompileDecks\\Main2\\Fear\\Fear2.jpg",
+        "C:\\CompileDecks\\Main2\\Fear\\Fear3.jpg",
+        "C:\\CompileDecks\\Main2\\Fear\\Fear4.jpg",
+        "C:\\CompileDecks\\Main2\\Fear\\Fear5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Ice",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Ice\\Ice1.jpg",
+        "C:\\CompileDecks\\Main2\\Ice\\Ice2.jpg",
+        "C:\\CompileDecks\\Main2\\Ice\\Ice3.jpg",
+        "C:\\CompileDecks\\Main2\\Ice\\Ice4.jpg",
+        "C:\\CompileDecks\\Main2\\Ice\\Ice5.jpg",
+        "C:\\CompileDecks\\Main2\\Ice\\Ice6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Luck",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Luck\\Luck0.jpg",
+        "C:\\CompileDecks\\Main2\\Luck\\Luck1.jpg",
+        "C:\\CompileDecks\\Main2\\Luck\\Luck2.jpg",
+        "C:\\CompileDecks\\Main2\\Luck\\Luck3.jpg",
+        "C:\\CompileDecks\\Main2\\Luck\\Luck4.jpg",
+        "C:\\CompileDecks\\Main2\\Luck\\Luck5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Mirror",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Mirror\\Mirror0.jpg",
+        "C:\\CompileDecks\\Main2\\Mirror\\Mirror1.jpg",
+        "C:\\CompileDecks\\Main2\\Mirror\\Mirror2.jpg",
+        "C:\\CompileDecks\\Main2\\Mirror\\Mirror3.jpg",
+        "C:\\CompileDecks\\Main2\\Mirror\\Mirror4.jpg",
+        "C:\\CompileDecks\\Main2\\Mirror\\Mirror5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Peace",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Peace\\Peace1.jpg",
+        "C:\\CompileDecks\\Main2\\Peace\\Peace2.jpg",
+        "C:\\CompileDecks\\Main2\\Peace\\Peace3.jpg",
+        "C:\\CompileDecks\\Main2\\Peace\\Peace4.jpg",
+        "C:\\CompileDecks\\Main2\\Peace\\Peace5.jpg",
+        "C:\\CompileDecks\\Main2\\Peace\\Peace6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Smoke",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Smoke\\Smoke0.jpg",
+        "C:\\CompileDecks\\Main2\\Smoke\\Smoke1.jpg",
+        "C:\\CompileDecks\\Main2\\Smoke\\Smoke2.jpg",
+        "C:\\CompileDecks\\Main2\\Smoke\\Smoke3.jpg",
+        "C:\\CompileDecks\\Main2\\Smoke\\Smoke4.jpg",
+        "C:\\CompileDecks\\Main2\\Smoke\\Smoke5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Time",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Time\\Time0.jpg",
+        "C:\\CompileDecks\\Main2\\Time\\Time1.jpg",
+        "C:\\CompileDecks\\Main2\\Time\\Time2.jpg",
+        "C:\\CompileDecks\\Main2\\Time\\Time3.jpg",
+        "C:\\CompileDecks\\Main2\\Time\\Time4.jpg",
+        "C:\\CompileDecks\\Main2\\Time\\Time5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Unity",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\Unity\\Unity0.jpg",
+        "C:\\CompileDecks\\Main2\\Unity\\Unity1.jpg",
+        "C:\\CompileDecks\\Main2\\Unity\\Unity2.jpg",
+        "C:\\CompileDecks\\Main2\\Unity\\Unity3.jpg",
+        "C:\\CompileDecks\\Main2\\Unity\\Unity4.jpg",
+        "C:\\CompileDecks\\Main2\\Unity\\Unity5.jpg"
+      ]
+    },
+    {
+      "DeckName": "War",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main2\\War\\War0.jpg",
+        "C:\\CompileDecks\\Main2\\War\\War1.jpg",
+        "C:\\CompileDecks\\Main2\\War\\War2.jpg",
+        "C:\\CompileDecks\\Main2\\War\\War3.jpg",
+        "C:\\CompileDecks\\Main2\\War\\War4.jpg",
+        "C:\\CompileDecks\\Main2\\War\\War5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Ambush",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Ambush\\Ambush0.jpg",
+        "C:\\CompileDecks\\Main3\\Ambush\\Ambush1.jpg",
+        "C:\\CompileDecks\\Main3\\Ambush\\Ambush2.jpg",
+        "C:\\CompileDecks\\Main3\\Ambush\\Ambush3.jpg",
+        "C:\\CompileDecks\\Main3\\Ambush\\Ambush4.jpg",
+        "C:\\CompileDecks\\Main3\\Ambush\\Ambush5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Envy",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Envy\\Envy0.jpg",
+        "C:\\CompileDecks\\Main3\\Envy\\Envy1.jpg",
+        "C:\\CompileDecks\\Main3\\Envy\\Envy2.jpg",
+        "C:\\CompileDecks\\Main3\\Envy\\Envy3.jpg",
+        "C:\\CompileDecks\\Main3\\Envy\\Envy4.jpg",
+        "C:\\CompileDecks\\Main3\\Envy\\Envy5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Flexible",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Flexible\\Flexible0.jpg",
+        "C:\\CompileDecks\\Main3\\Flexible\\Flexible1.jpg",
+        "C:\\CompileDecks\\Main3\\Flexible\\Flexible2.jpg",
+        "C:\\CompileDecks\\Main3\\Flexible\\Flexible3.jpg",
+        "C:\\CompileDecks\\Main3\\Flexible\\Flexible4.jpg",
+        "C:\\CompileDecks\\Main3\\Flexible\\Flexible5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Fulcrum",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Fulcrum\\Fulcrum0.jpg",
+        "C:\\CompileDecks\\Main3\\Fulcrum\\Fulcrum1.jpg",
+        "C:\\CompileDecks\\Main3\\Fulcrum\\Fulcrum2.jpg",
+        "C:\\CompileDecks\\Main3\\Fulcrum\\Fulcrum3.jpg",
+        "C:\\CompileDecks\\Main3\\Fulcrum\\Fulcrum4.jpg",
+        "C:\\CompileDecks\\Main3\\Fulcrum\\Fulcrum5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Gluttony",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Gluttony\\Gluttony0.jpg",
+        "C:\\CompileDecks\\Main3\\Gluttony\\Gluttony1.jpg",
+        "C:\\CompileDecks\\Main3\\Gluttony\\Gluttony2.jpg",
+        "C:\\CompileDecks\\Main3\\Gluttony\\Gluttony3.jpg",
+        "C:\\CompileDecks\\Main3\\Gluttony\\Gluttony4.jpg",
+        "C:\\CompileDecks\\Main3\\Gluttony\\Gluttony5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Greed",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Greed\\Greed0.jpg",
+        "C:\\CompileDecks\\Main3\\Greed\\Greed1.jpg",
+        "C:\\CompileDecks\\Main3\\Greed\\Greed2.jpg",
+        "C:\\CompileDecks\\Main3\\Greed\\Greed3.jpg",
+        "C:\\CompileDecks\\Main3\\Greed\\Greed4.jpg",
+        "C:\\CompileDecks\\Main3\\Greed\\Greed5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Inert",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Inert\\Inert0.jpg",
+        "C:\\CompileDecks\\Main3\\Inert\\Inert1.jpg",
+        "C:\\CompileDecks\\Main3\\Inert\\Inert2.jpg",
+        "C:\\CompileDecks\\Main3\\Inert\\Inert3.jpg",
+        "C:\\CompileDecks\\Main3\\Inert\\Inert4.jpg",
+        "C:\\CompileDecks\\Main3\\Inert\\Inert5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Lust",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Lust\\Lust0.jpg",
+        "C:\\CompileDecks\\Main3\\Lust\\Lust2.jpg",
+        "C:\\CompileDecks\\Main3\\Lust\\Lust3.jpg",
+        "C:\\CompileDecks\\Main3\\Lust\\Lust4.jpg",
+        "C:\\CompileDecks\\Main3\\Lust\\Lust5.jpg",
+        "C:\\CompileDecks\\Main3\\Lust\\Lust6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Momentum",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Momentum\\Momentum0.jpg",
+        "C:\\CompileDecks\\Main3\\Momentum\\Momentum1.jpg",
+        "C:\\CompileDecks\\Main3\\Momentum\\Momentum3.jpg",
+        "C:\\CompileDecks\\Main3\\Momentum\\Momentum4.jpg",
+        "C:\\CompileDecks\\Main3\\Momentum\\Momentum5.jpg",
+        "C:\\CompileDecks\\Main3\\Momentum\\Momentum6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Nova",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Nova\\Nova0.jpg",
+        "C:\\CompileDecks\\Main3\\Nova\\Nova1.jpg",
+        "C:\\CompileDecks\\Main3\\Nova\\Nova2.jpg",
+        "C:\\CompileDecks\\Main3\\Nova\\Nova3.jpg",
+        "C:\\CompileDecks\\Main3\\Nova\\Nova4.jpg",
+        "C:\\CompileDecks\\Main3\\Nova\\Nova5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Overwhelm",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Overwhelm\\Overwhelm1.jpg",
+        "C:\\CompileDecks\\Main3\\Overwhelm\\Overwhelm2.jpg",
+        "C:\\CompileDecks\\Main3\\Overwhelm\\Overwhelm3.jpg",
+        "C:\\CompileDecks\\Main3\\Overwhelm\\Overwhelm4.jpg",
+        "C:\\CompileDecks\\Main3\\Overwhelm\\Overwhelm5.jpg",
+        "C:\\CompileDecks\\Main3\\Overwhelm\\Overwhelm6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Pride",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Pride\\Pride0.jpg",
+        "C:\\CompileDecks\\Main3\\Pride\\Pride2.jpg",
+        "C:\\CompileDecks\\Main3\\Pride\\Pride3.jpg",
+        "C:\\CompileDecks\\Main3\\Pride\\Pride4.jpg",
+        "C:\\CompileDecks\\Main3\\Pride\\Pride5.jpg",
+        "C:\\CompileDecks\\Main3\\Pride\\Pride6.jpg"
+      ]
+    },
+    {
+      "DeckName": "Rigid",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Rigid\\Rigid1.jpg",
+        "C:\\CompileDecks\\Main3\\Rigid\\Rigid2.jpg",
+        "C:\\CompileDecks\\Main3\\Rigid\\Rigid3.jpg",
+        "C:\\CompileDecks\\Main3\\Rigid\\Rigid4.jpg",
+        "C:\\CompileDecks\\Main3\\Rigid\\Rigid5.jpg",
+        "C:\\CompileDecks\\Main3\\Rigid\\Rigid7.jpg"
+      ]
+    },
+    {
+      "DeckName": "Sloth",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Sloth\\Sloth0.jpg",
+        "C:\\CompileDecks\\Main3\\Sloth\\Sloth1.jpg",
+        "C:\\CompileDecks\\Main3\\Sloth\\Sloth2.jpg",
+        "C:\\CompileDecks\\Main3\\Sloth\\Sloth3.jpg",
+        "C:\\CompileDecks\\Main3\\Sloth\\Sloth4.jpg",
+        "C:\\CompileDecks\\Main3\\Sloth\\Sloth5.jpg"
+      ]
+    },
+    {
+      "DeckName": "Wrath",
+      "ImagePaths": [
+        "C:\\CompileDecks\\Main3\\Wrath\\Wrath0.jpg",
+        "C:\\CompileDecks\\Main3\\Wrath\\Wrath1.jpg",
+        "C:\\CompileDecks\\Main3\\Wrath\\Wrath2.jpg",
+        "C:\\CompileDecks\\Main3\\Wrath\\Wrath3.jpg",
+        "C:\\CompileDecks\\Main3\\Wrath\\Wrath4.jpg",
+        "C:\\CompileDecks\\Main3\\Wrath\\Wrath5.jpg"
+      ]
+    }
+  ]
+}
