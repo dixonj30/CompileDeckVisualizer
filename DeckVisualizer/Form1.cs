@@ -182,7 +182,7 @@ namespace DeckVisualizer
                 Dock = DockStyle.Fill,
                 BackColor = Color.FromArgb(50, 50, 55),
                 Margin = new Padding(0),
-                Padding = new Padding(0),
+                Padding = new Padding(0, 2, 0, 2),
                 ColumnCount = 1,
                 RowCount = 1
             };
@@ -198,8 +198,9 @@ namespace DeckVisualizer
                 BackColor = Color.FromArgb(110, 45, 45),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 4f, FontStyle.Bold),
-                Anchor = AnchorStyles.None
+                Font = new Font("Segoe UI", 5f, FontStyle.Bold),
+                Anchor = AnchorStyles.None,
+                Margin = new Padding(0)
             };
             btnResetBoard.FlatAppearance.BorderSize = 0;
             btnResetBoard.Click += MasterResetButton_Click;
