@@ -104,44 +104,6 @@ namespace DeckVisualizer
             }
         }
 
-        /*private void RefreshAllMenus()
-        {
-            LoadDecksFromDisk();
-            ComboBox[] allMenus = { p1Deck1Menu, p1Deck2Menu, p1Deck3Menu, p2Deck1Menu, p2Deck2Menu, p2Deck3Menu };
-
-            foreach (var menu in allMenus)
-            {
-                if (menu == null) continue;
-                string selectedName = menu.SelectedItem?.ToString();
-
-                menu.Items.Clear();
-
-                foreach (var deck in loadedDecks)
-                {
-                    menu.Items.Add(deck);
-                }
-
-                bool restored = false;
-                if (!string.IsNullOrEmpty(selectedName))
-                {
-                    for (int i = 0; i < menu.Items.Count; i++)
-                    {
-                        if (menu.Items[i].ToString() == selectedName)
-                        {
-                            menu.SelectedIndex = i;
-                            restored = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!restored && menu.Items.Count > 0)
-                {
-                    menu.SelectedIndex = 0;
-                }
-            }
-        } */
-
         private FlowLayoutPanel[] p1Rows = new FlowLayoutPanel[3];
         private FlowLayoutPanel[] p2Rows = new FlowLayoutPanel[3];
 
