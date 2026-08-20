@@ -10,8 +10,8 @@ namespace DeckVisualizer
     public class DeckPickerWindow : Form
     {
         private static readonly string DeckPickerWindowTitle = "Select Card Deck Layout Profile";
-        public const int deckPickerWindowWidth = 800;
-        public const int deckPickerWindowHeight = 550;
+        public const int DeckPickerWindowWidth = 800;
+        public const int DeckPickerWindowHeight = 550;
 
         public DeckConfig SelectedDeck { get; private set; }
         public Image SelectedDeckImage { get; private set; }
@@ -19,7 +19,7 @@ namespace DeckVisualizer
         public DeckPickerWindow(List<DeckConfig> decks)
         {
             this.Text = DeckPickerWindowTitle;
-            this.Size = new Size(deckPickerWindowWidth, deckPickerWindowHeight);
+            this.Size = new Size(DeckPickerWindowWidth, DeckPickerWindowHeight);
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -39,8 +39,8 @@ namespace DeckVisualizer
             {
                 Panel deckTile = new Panel
                 {
-                    Width = deckPickerWindowWidth / 5,
-                    Height = deckPickerWindowHeight / 8,
+                    Width = DeckPickerWindowWidth / 5,
+                    Height = DeckPickerWindowHeight / 8,
                     Margin = new Padding(3),
                     BackColor = Color.Transparent,
                     Cursor = Cursors.Hand
@@ -48,18 +48,16 @@ namespace DeckVisualizer
 
                 PictureBox imgCover = new PictureBox
                 {
-                    Location = new Point(-10, 0),
-                    Size = new Size(deckPickerWindowWidth / 5, deckPickerWindowHeight / 8),
-                    SizeMode = PictureBoxSizeMode.Normal,
+                    Location = new Point(0, 0),
+                    Size = new Size(DeckPickerWindowWidth / 5, DeckPickerWindowHeight / 8),
+                    SizeMode = PictureBoxSizeMode.Zoom,
                     BackColor = Color.Transparent
                 };
 
-                if (deck.ImagePaths != null && deck.ImagePaths.Count > 0 && !string.IsNullOrEmpty(deck.ImagePaths[0]))
+                if (!string.IsNullOrEmpty(deck.DeckTitleImage))
                 {
                     string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                    string fullPath = Path.IsPathRooted(deck.ImagePaths[0])
-                        ? deck.ImagePaths[0]
-                        : Path.Combine(baseDir, deck.ImagePaths[0]);
+                    string fullPath = Path.IsPathRooted(deck.DeckTitleImage) ? deck.DeckTitleImage : Path.Combine(baseDir, deck.DeckTitleImage);
 
                     if (File.Exists(fullPath))
                     {

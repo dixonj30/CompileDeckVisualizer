@@ -11,11 +11,13 @@ namespace DeckVisualizer
     public class EditorWindow : Form
     {
         private static readonly string EditorTitle = "Deck Configuration Editor";
+        private const int EditorWindowWidth = 460;
+        private const int EditorWindowHeight = 455;
 
         public EditorWindow(Action onSaveCallback)
         {
             this.Text = EditorTitle;
-            this.Size = new Size(460, 420);
+            this.Size = new Size(EditorWindowWidth, EditorWindowHeight);
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -33,17 +35,22 @@ namespace DeckVisualizer
         private static readonly string SaveSuccessTitle = "Success";
         private static readonly string SaveTitle = "Save Custom Deck Profile";
         private static readonly string EditorEmptyWarning = "Please type in a Deck Name first.";
-        private static readonly string EditorEmptyTitle = "Error";
+        private static readonly string EditorEmptyError = "Error";
         private static readonly string EditorEmptySlot = "Empty Slot...";
         private static readonly string EditorBatchSelectButton = "⚡ Batch Select 6 Images At Once";
-        private static readonly string BatchSelectTitle = "Select Exactly 6 Image Files for your Deck";
+        private static readonly string BatchSelectButton = "Select Exactly 6 Image Files for your Deck";
         private static readonly string BatchLimitNotice = "You selected more than 6 images. Only the first 6 will be used.";
-        private static readonly string BatchLimitTitle = "Notice";
-        private static readonly string SingleSelectTitle = "Select Image File for Card Slot";
+        private static readonly string BatchLimitMessage= "Notice";
+        private static readonly string SingleSelectButton = "Select Image File for Card Slot";
+        private static readonly string TitleSelectButton = "Select Deck Title Layout Image Asset";
+        private static readonly string TitleBrowseButton = "Browse Title Graphic...";
+        private static readonly string TitleBrowseLabel = "Deck Title Image:";
 
         private TextBox txtDeckName;
         private string[] chosenPaths = new string[6];
         private Button[] slotButtons = new Button[6];
+        private string chosenTitlePath = "";
+        private Button btnTitleBrowse;
         private Action onDeckSavedCallback;
 
         public DeckEditorPanel(Action onSaveCallback)
@@ -108,10 +115,18 @@ namespace DeckVisualizer
                 this.Controls.Add(btnBrowse);
             }
 
+            Label lblTitleImage = new Label { Text = TitleBrowseLabel, Location = new Point(20, 315), Width = 100, ForeColor = Color.LightSkyBlue, Font = new Font("Arial", 9, FontStyle.Bold) };
+            btnTitleBrowse = new Button { Text = TitleBrowseButton, Location = new Point(120, 310), Width = 300, Height = 26, TextAlign = ContentAlignment.MiddleLeft, BackColor = Color.FromArgb(40, 55, 70), ForeColor = Color.White, FlatStyle = FlatStyle.Flat };
+            btnTitleBrowse.FlatAppearance.BorderSize = 1;
+            btnTitleBrowse.FlatAppearance.BorderColor = Color.FromArgb(60, 85, 110);
+            btnTitleBrowse.Click += BrowseTitleImage_Click;
+            this.Controls.Add(lblTitleImage);
+            this.Controls.Add(btnTitleBrowse);
+
             Button btnSave = new Button
             {
                 Text = SaveTitle,
-                Location = new Point(120, 325),
+                Location = new Point(120, 360),
                 Width = 200,
                 Height = 35,
                 BackColor = Color.FromArgb(45, 110, 75),
@@ -123,6 +138,20 @@ namespace DeckVisualizer
             btnSave.Click += SaveDeckButton_Click;
             this.Controls.Add(btnSave);
         }
+        private void BrowseTitleImage_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = Form1.ImageFileFilters;
+                ofd.Title = TitleSelectButton;
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    chosenTitlePath = ofd.FileName;
+                    btnTitleBrowse.Text = Path.GetFileName(ofd.FileName);
+                    btnTitleBrowse.BackColor = Color.FromArgb(40, 75, 95); // Sapphire confirmation shade
+                }
+            }
+        }
 
         private void BatchSelectImages_Click(object sender, EventArgs e)
         {
@@ -130,7 +159,7 @@ namespace DeckVisualizer
             {
                 ofd.Multiselect = true;
                 ofd.Filter = ImageFileFilters;
-                ofd.Title = BatchSelectTitle;
+                ofd.Title = BatchSelectButton;
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -139,7 +168,7 @@ namespace DeckVisualizer
 
                     if (files.Length > 6)
                     {
-                        MessageBox.Show(BatchLimitNotice, BatchLimitTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(BatchLimitNotice, BatchLimitMessage, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     int fillLimit = Math.Min(files.Length, 6);
@@ -158,7 +187,7 @@ namespace DeckVisualizer
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = ImageFileFilters;
-                ofd.Title = $"{SingleSelectTitle} {index + 1}";
+                ofd.Title = $"{SingleSelectButton} {index + 1}";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -174,7 +203,7 @@ namespace DeckVisualizer
             string enteredName = txtDeckName.Text.Trim();
             if (string.IsNullOrEmpty(enteredName))
             {
-                MessageBox.Show(EditorEmptyWarning, EditorEmptyTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(EditorEmptyWarning, EditorEmptyError, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -194,7 +223,13 @@ namespace DeckVisualizer
                 }
             }
 
-            DeckConfig newDeck = new DeckConfig { DeckName = enteredName, ImagePaths = new List<string>(chosenPaths) };
+            string finalTitlePath = chosenTitlePath;
+            if (!string.IsNullOrEmpty(finalTitlePath) && finalTitlePath.StartsWith(baseDir, StringComparison.OrdinalIgnoreCase))
+            {
+                finalTitlePath = finalTitlePath.Substring(baseDir.Length);
+            }
+
+            DeckConfig newDeck = new DeckConfig { DeckName = enteredName, ImagePaths = new List<string>(chosenPaths), DeckTitleImage = finalTitlePath };
             string jsonPath = Path.Combine(baseDir, DecksDatabaseFileName);
             AppSettings currentSettings = new AppSettings { AvailableDecks = new List<DeckConfig>() };
 
@@ -217,6 +252,10 @@ namespace DeckVisualizer
             MessageBox.Show($"'{enteredName}' has been saved!", SaveSuccessTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             txtDeckName.Clear();
+            chosenTitlePath = "";
+            btnTitleBrowse.Text = "Browse Title Graphic...";
+            btnTitleBrowse.BackColor = Color.FromArgb(40, 55, 70);
+
             for (int i = 0; i < 6; i++)
             {
                 chosenPaths[i] = null;

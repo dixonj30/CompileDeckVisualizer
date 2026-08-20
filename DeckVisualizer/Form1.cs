@@ -10,8 +10,8 @@ namespace DeckVisualizer
     public partial class Form1 : Form
     {
         private List<DeckConfig> loadedDecks = new List<DeckConfig>();
-        private const int windowWidth = 870;
-        private const int windowHeight = 955;
+        private const int WindowWidth = 870;
+        private const int WindowHeight = 955;
         private FlowLayoutPanel[] p1Rows = new FlowLayoutPanel[3];
         private FlowLayoutPanel[] p2Rows = new FlowLayoutPanel[3];
         private Button p1Deck1Menu, p1Deck2Menu, p1Deck3Menu;
@@ -48,8 +48,8 @@ namespace DeckVisualizer
 
             InitializeComponent();
 
-            this.Size = new Size(windowWidth, windowHeight);
-            this.MinimumSize = new Size(windowWidth, windowHeight);
+            this.Size = new Size(WindowWidth, WindowHeight);
+            this.MinimumSize = new Size(WindowWidth, WindowHeight);
 
             Panel customTitleBar = new Panel
             {
@@ -63,7 +63,7 @@ namespace DeckVisualizer
                 Text = AppTitleHeader,
                 ForeColor = Color.White,
                 Font = new Font("Arial", 9, FontStyle.Bold),
-                Location = new Point(windowWidth / 2, 5),
+                Location = new Point(WindowWidth / 2, 5),
                 AutoSize = true
             };
             customTitleBar.Controls.Add(lblTitle);
@@ -75,7 +75,7 @@ namespace DeckVisualizer
                 BackColor = Color.FromArgb(50, 50, 55),
                 FlatStyle = FlatStyle.Flat,
                 Size = new Size(35, 21),
-                Location = new Point(windowWidth - 45, 2),
+                Location = new Point(WindowWidth - 45, 2),
                 Font = new Font("Arial", 8, FontStyle.Bold)
             };
             btnClose.FlatAppearance.BorderSize = 0;
@@ -256,30 +256,27 @@ namespace DeckVisualizer
             {
                 if (picker.ShowDialog(this) == DialogResult.OK && picker.SelectedDeck != null)
                 {
+                    // Apply the selected deck to the grid row
                     UpdateSingleRowDisplay(targetRowPanel, picker.SelectedDeck, slotNamePrefix);
-
                     sourceButton.Text = "";
 
+                    // HIGH-PERFORMANCE TITLE IMAGE PASSING ENGINE
                     if (picker.SelectedDeckImage != null)
                     {
                         if (sourceButton.Image != null) sourceButton.Image.Dispose();
 
+                        // 1. Create a blank canvas matching your exact 128x146 button dimensions
                         Bitmap buttonCanvas = new Bitmap(sourceButton.Width, sourceButton.Height);
 
                         using (Graphics g = Graphics.FromImage(buttonCanvas))
                         {
                             g.Clear(Color.Transparent);
 
-                            float scaleX = (float)sourceButton.Width / (float)(DeckPickerWindow.deckPickerWindowWidth / 5);
-                            float scaleY = (float)sourceButton.Height / (float)(DeckPickerWindow.deckPickerWindowHeight / 8);
-
-                            int targetOffsetX = (int)(-10 * scaleX);
-                            int targetWidth = (int)(picker.SelectedDeckImage.Width * scaleX);
-                            int targetHeight = (int)(picker.SelectedDeckImage.Height * scaleY);
-
-                            g.DrawImage(picker.SelectedDeckImage, targetOffsetX, 0, targetWidth, targetHeight);
+                            // FIXED: Paints the pre-loaded title image flush across the full button width and height with zero clipping!
+                            g.DrawImage(picker.SelectedDeckImage, 0, 0, sourceButton.Width, sourceButton.Height);
                         }
 
+                        // Mount the clean, flat graphic directly onto the button background canvas
                         sourceButton.Image = buttonCanvas;
                     }
                     else
@@ -443,6 +440,7 @@ namespace DeckVisualizer
         {
             public string DeckName { get; set; } = "";
             public List<string> ImagePaths { get; set; } = new List<string>();
+            public string DeckTitleImage { get; set; } = "";
             public override string ToString() => DeckName;
         }
 
