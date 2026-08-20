@@ -12,8 +12,6 @@ namespace DeckVisualizer
         private List<DeckConfig> loadedDecks = new List<DeckConfig>();
         private const int windowWidth = 870;
         private const int windowHeight = 955;
-        private const int deckPickerWindowWidth = 800;
-        private const int deckPickerWindowHeight = 550;
         private FlowLayoutPanel[] p1Rows = new FlowLayoutPanel[3];
         private FlowLayoutPanel[] p2Rows = new FlowLayoutPanel[3];
         private Button p1Deck1Menu, p1Deck2Menu, p1Deck3Menu;
@@ -33,7 +31,6 @@ namespace DeckVisualizer
         private static readonly string CardMissingPlaceholderText = "Missing";
 
         private static readonly string AppTitleHeader = "Compile Deck Tracker";
-        private static readonly string DeckPickerWindowTitle = "Select Card Deck Layout Profile";
         private static readonly string ResetButtonLabel = "RESET";
         private static readonly string EditorButtonLabel = "EDITOR";
 
@@ -273,8 +270,8 @@ namespace DeckVisualizer
                         {
                             g.Clear(Color.Transparent);
 
-                            float scaleX = (float)sourceButton.Width / (float)(deckPickerWindowWidth / 5);
-                            float scaleY = (float)sourceButton.Height / (float)(deckPickerWindowHeight / 8);
+                            float scaleX = (float)sourceButton.Width / (float)(DeckPickerWindow.deckPickerWindowWidth / 5);
+                            float scaleY = (float)sourceButton.Height / (float)(DeckPickerWindow.deckPickerWindowHeight / 8);
 
                             int targetOffsetX = (int)(-10 * scaleX);
                             int targetWidth = (int)(picker.SelectedDeckImage.Width * scaleX);
@@ -454,79 +451,5 @@ namespace DeckVisualizer
             public List<DeckConfig> AvailableDecks { get; set; } = new List<DeckConfig>();
         }
 
-        public class DeckPickerWindow : Form
-        {
-            public DeckConfig SelectedDeck { get; private set; }
-            public Image SelectedDeckImage { get; private set; }
-
-            public DeckPickerWindow(List<DeckConfig> decks)
-            {             
-                this.Text = Form1.DeckPickerWindowTitle;
-                this.Size = new Size(deckPickerWindowWidth, deckPickerWindowHeight);
-                this.StartPosition = FormStartPosition.CenterParent;
-                this.FormBorderStyle = FormBorderStyle.FixedDialog;
-                this.MaximizeBox = false;
-                this.MinimizeBox = false;
-                this.BackColor = Color.FromArgb(58, 61, 64);
-
-                FlowLayoutPanel pickerGrid = new FlowLayoutPanel
-                {
-                    Dock = DockStyle.Fill,
-                    AutoScroll = true,
-                    Padding = new Padding(15),
-                    Margin = new Padding(0)
-                };
-
-
-                foreach (var deck in decks)
-                {
-                    Panel deckTile = new Panel
-                    {
-                        Width = deckPickerWindowWidth / 5,
-                        Height = deckPickerWindowHeight / 8,
-                        Margin = new Padding(3),
-                        BackColor = Color.Transparent,
-                        Cursor = Cursors.Hand
-                    };
-
-                    PictureBox imgCover = new PictureBox
-                    {
-                        Location = new Point(-10, 0),
-                        Size = new Size(deckPickerWindowWidth / 5, deckPickerWindowHeight / 8),
-                        SizeMode = PictureBoxSizeMode.Normal,
-                        BackColor = Color.Transparent
-                    };
-
-                    if (deck.ImagePaths != null && deck.ImagePaths.Count > 0 && !string.IsNullOrEmpty(deck.ImagePaths[0]))
-                    {
-                        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                        string fullPath = Path.IsPathRooted(deck.ImagePaths[0])
-                            ? deck.ImagePaths[0]
-                            : Path.Combine(baseDir, deck.ImagePaths[0]);
-
-                        if (File.Exists(fullPath))
-                        {
-                            imgCover.Image = Image.FromFile(fullPath);
-                        }
-                    }
-
-                    deckTile.Controls.Add(imgCover);
-
-                    Action selectAction = () =>
-                    {
-                        this.SelectedDeck = deck;
-                        this.SelectedDeckImage = imgCover.Image;
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-                    };
-
-                    deckTile.Click += (s, e) => selectAction();
-                    imgCover.Click += (s, e) => selectAction();
-                    pickerGrid.Controls.Add(deckTile);
-                }
-
-                this.Controls.Add(pickerGrid);
-            }
-        }
     }
 }
