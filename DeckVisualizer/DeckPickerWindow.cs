@@ -30,7 +30,7 @@ namespace DeckVisualizer
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                Padding = new Padding(15),
+                Padding = new Padding(20),
                 Margin = new Padding(0)
             };
 
@@ -39,9 +39,9 @@ namespace DeckVisualizer
             {
                 Panel deckTile = new Panel
                 {
-                    Width = DeckPickerWindowWidth / 5,
-                    Height = DeckPickerWindowHeight / 8,
-                    Margin = new Padding(3),
+                    Width = 128,
+                    Height = 146,
+                    Margin = new Padding(12),
                     BackColor = Color.Transparent,
                     Cursor = Cursors.Hand
                 };
@@ -49,8 +49,8 @@ namespace DeckVisualizer
                 PictureBox imgCover = new PictureBox
                 {
                     Location = new Point(0, 0),
-                    Size = new Size(DeckPickerWindowWidth / 5, DeckPickerWindowHeight / 8),
-                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Size = new Size(128, 146),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
                     BackColor = Color.Transparent
                 };
 
@@ -65,7 +65,21 @@ namespace DeckVisualizer
                     }
                 }
 
+                Label lblDeckName = new Label
+                {
+                    Text = deck.DeckName,
+                    Location = new Point(0, 116),
+                    Size = new Size(128, 30),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 9f, FontStyle.Bold),
+                    TextAlign = ContentAlignment.TopCenter,
+                    BackColor = Color.FromArgb(140, 20, 20, 25)
+                };
+
+                imgCover.Controls.Add(lblDeckName);
                 deckTile.Controls.Add(imgCover);
+                lblDeckName.BringToFront();
+
 
                 Action selectAction = () =>
                 {
@@ -77,6 +91,8 @@ namespace DeckVisualizer
 
                 deckTile.Click += (s, e) => selectAction();
                 imgCover.Click += (s, e) => selectAction();
+                lblDeckName.Click += (s, e) => selectAction();
+
                 pickerGrid.Controls.Add(deckTile);
             }
 
